@@ -1,265 +1,299 @@
 {
     "COMMON": {
-      "ADD": "መጨመር",
-      "EDIT": "ማስተካከል",
-      "DELETE": "ማጥፋት",
-      "CANCEL": "መሰረዝ",
-      "SAVE": "ማስቀመጥ",
-      "UPDATE": "ማዘመን",
-      "ACTIVATE": "ማስጀመር",
-      "DEACTIVATE": "ማቆም",
-      "LOADING": "በመጫን ላይ...",
-      "CONFIRM_DELETE": "{{name}} ን ማጥፋት እርግጠኛ ኖት?",
-      "CONFIRM_ACTION": "{{name}} ን {{action}} ማድረግ እርግጠኛ ኖት?",
-      "CONFIRM": "እሺ"
+        "ADD": "Add",
+        "EDIT": "Edit",
+        "DELETE": "Delete",
+        "CANCEL": "Cancel",
+        "SAVE": "Save",
+        "UPDATE": "Update",
+        "ACTIVATE": "Activate",
+        "DEACTIVATE": "Deactivate",
+        "LOADING": "Loading...",
+        "CONFIRM_DELETE": "Are you sure you want to delete {{name}}?",
+        "CONFIRM_ACTION": "Are you sure you want to {{action}} {{name}}?",
+        "CONFIRM": "Confirm"
     },
     "TOP_BAR": {
-      "SELECT_SHOP": "መደብር ይምረጡ",
-      "SHOP_PREFIX": "መደብር: ",
-      "ADD_SHOP": "መደብር ያክሉ",
-      "NO_SHOPS": "መደብር አልተጨመረም",
-      "PROFILE_SETTINGS": "የፕሮፋይል መቼቶች",
-      "LOGOUT": "መውጫ",
-      "ROLES": {
-        "OWNER": "ባለቤት",
-        "SHOP_ADMIN": "የመደብር አስተዳዳሪ",
-        "STAFF": "ሰራተኞች"
-      },
-      "LANGUAGE": "ቋንቋ"
+        "SELECT_SHOP": "Select Shop",
+        "SHOP_PREFIX": "Shop: ",
+        "ADD_SHOP": "Add Shop",
+        "NO_SHOPS": "No shops available",
+        "PROFILE_SETTINGS": "Profile Settings",
+        "LOGOUT": "Logout",
+        "ROLES": {
+            "OWNER": "Owner",
+            "SHOP_ADMIN": "Shop Admin",
+            "STAFF": "Staff"
+        },
+        "LANGUAGE": "Language"
     },
     "SETTINGS": {
-      "SHOPS": {
-        "TITLE": "መደብሮች እና ቦታዎች",
-        "SUBTITLE": "የንግድዎን ቦታዎች ቀላል ያቀናብሩ",
-        "ADD_NEW": "አዲስ መደብር ያክሉ",
-        "EDIT_SHOP": "መደብር ያርትሙ",
-        "CREATE_TITLE": "አዲስ መደብር ያክሉ",
-        "CREATE_SUBTITLE": "ለንግድዎ አዲስ የመደብር ቦታ ይመዝገቡ",
-        "EDIT_TITLE": "መደብር ያርትሙ",
-        "EDIT_SUBTITLE": "የመደብር ዝርዝሮችን ያዘምኑ",
-        "FORM": {
-          "NAME": "የመደብር ስም",
-          "ADDRESS": "አድራሻ",
-          "PHONE": "ስልክ ቁጥር",
-          "EMAIL": "ኢሜይል",
-          "PLACEHOLDERS": {
-            "NAME": "የመደብሩን ስም ያስገቡ",
-            "ADDRESS": "የመደብሩን አድራሻ ያስገቡ",
-            "PHONE": "የመደብሩን ስልክ ቁጥር ያስገቡ",
-            "EMAIL": "የመደብሩን ኢሜይል አድራሻ ያስገቡ"
-          }
-        },
-        "STATUS": {
-          "ACTIVE": "ንቁ",
-          "INACTIVE": "ተቋርጧል"
-        },
-        "EMPTY": {
-          "TITLE": "መደብር አልተቋቋመም",
-          "SUBTITLE": "የመጀመሪያውን መደብር አሁን ይጨምሩ"
-        },
-        "CONFIRM_ACTIVATE": "{{name}} ን ማስጀመር እርግጠኛ ኖት?",
-        "CONFIRM_DEACTIVATE": "{{name}} ን ማቆም እርግጠኛ ኖት?",
-        "CONFIRM_DELETE": "{{name}} ን ማጥፋት እርግጠኛ ኖት? ይህ እርምጃ መመለስ አይችልም.",
-        "ERROR_STATUS": "የመደብሩን ሁኔታ ማዘመን አልተሳካም። እባክዎን እንደገና ይሞክሩ።",
-        "ERROR_DELETE": "መደብሩን ማጥፋት አልተሳካም። እባክዎን እንደገና ይሞክሩ።"
-      },
-      "LOCALIZATION": {
-        "TITLE": "አካባቢ ቅንብሮች",
-        "SUBTITLE": "ቋንቋ እና የክልል ቅንብሮች"
-      },
-      "NOTIFICATIONS": {
-        "TITLE": "ማሳወቂያዎች",
-        "SUBTITLE": "የSMS እና የኢሜይል ምርጫዎች"
-      }
+        "SHOPS": {
+            "TITLE": "Shops & Locations",
+            "SUBTITLE": "Manage your business locations",
+            "ADD_NEW": "Add New Shop",
+            "EDIT_SHOP": "Edit Shop",
+            "CREATE_TITLE": "Add New Store",
+            "CREATE_SUBTITLE": "Register a new shop location for your business",
+            "EDIT_TITLE": "Edit Shop",
+            "EDIT_SUBTITLE": "Update shop location details",
+            "FORM": {
+                "NAME": "Shop Name",
+                "ADDRESS": "Address",
+                "PHONE": "Phone Number",
+                "EMAIL": "Email",
+                "PLACEHOLDERS": {
+                    "NAME": "Enter shop name",
+                    "ADDRESS": "Enter shop address",
+                    "PHONE": "Enter phone number",
+                    "EMAIL": "Enter email address"
+                }
+            },
+            "STATUS": {
+                "ACTIVE": "Active",
+                "INACTIVE": "Inactive"
+            },
+            "EMPTY": {
+                "TITLE": "No shops configured",
+                "SUBTITLE": "Add your first shop location"
+            },
+            "CONFIRM_ACTIVATE": "Are you sure you want to activate {{name}}?",
+            "CONFIRM_DEACTIVATE": "Are you sure you want to deactivate {{name}}?",
+            "CONFIRM_DELETE": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+            "ERROR_STATUS": "Failed to update shop status. Please try again.",
+            "ERROR_DELETE": "Failed to delete shop. Please try again."
+        }
     },
     "DASHBOARD": {
-      "TITLE": "ዳሽቦርድ",
-      "SUBTITLE": "የመኪና ስፓ ንብረትዎን አጭር እይታ",
-      "FILTERS": {
-        "TODAY": "ዛሬ",
-        "THIS_WEEK": "በዚህ ሳምንት",
-        "THIS_MONTH": "በዚህ ወር",
-        "CUSTOM": "ተለይቶ የተመረጠ ጊዜ"
-      },
-      "REFRESH": "መደምደሚያ",
-      "LAST_UPDATED": "መጨረሻ የተዘመነው:",
-      "KPIS": {
-        "TODAYS_REVENUE": "የዛሬ ገቢ",
-        "THIS_WEEKS_REVENUE": "የዚህ ሳምንት ገቢ",
-        "THIS_MONTHS_REVENUE": "የዚህ ወር ገቢ",
-        "CUSTOM_REVENUE": "ገቢ (ተለይቶ የተመረጠ ጊዜ)",
-        "SERVICES_TODAY": "የዛሬ አገልግሎቶች",
-        "SERVICES_THIS_WEEK": "የዚህ ሳምንት አገልግሎቶች",
-        "SERVICES_THIS_MONTH": "የዚህ ወር አገልግሎቶች",
-        "SERVICES_CUSTOM": "አገልግሎቶች (ተለይቶ የተመረጠ ጊዜ)",
-        "CARS_IN_QUEUE": "በወረፋ ያሉ መኪናዎች",
-        "NEW_CUSTOMERS_TODAY": "ዛሬ አዲስ ደንበኞች",
-        "NEW_CUSTOMERS_THIS_WEEK": "በዚህ ሳምንት አዲስ ደንበኞች",
-        "NEW_CUSTOMERS_THIS_MONTH": "በዚህ ወር አዲስ ደንበኞች",
-        "NEW_CUSTOMERS_CUSTOM": "አዲስ ደንበኞች (ተለይቶ የተመረጠ ጊዜ)",
-        "LOADING": "በመጫን ላይ...",
-        "CURRENT": "አሁን"
-      },
-      "CHARTS": {
-        "SERVICES_WEEK": "የዚህ ሳምንት አገልግሎቶች",
-        "TOP_SERVICES": "ብዙ የሚመዘገቡ አገልግሎቶች"
-      },
-      "RECENT_SERVICES": {
-        "TITLE": "ቅርብ ጊዜ የተደረጉ አገልግሎቶች",
-        "TABLE": {
-          "TIME": "ሰዓት",
-          "CUSTOMER": "ደንበኛ",
-          "CAR": "መኪና",
-          "SERVICE": "አገልግሎት",
-          "STAFF": "ሰራተኛ",
-          "STATUS": "ሁኔታ"
+        "TITLE": "Dashboard",
+        "SUBTITLE": "Overview of your car spa operations",
+        "FILTERS": {
+            "TODAY": "Today",
+            "THIS_WEEK": "This Week",
+            "THIS_MONTH": "This Month",
+            "CUSTOM": "Custom Range"
         },
-        "NO_DATA": "ቅርብ ጊዜ የተደረገ አገልግሎት አልተገኘም"
-      }
+        "REFRESH": "Refresh",
+        "LAST_UPDATED": "Last updated:",
+        "KPIS": {
+            "TODAYS_REVENUE": "Today's Revenue",
+            "THIS_WEEKS_REVENUE": "This Week's Revenue",
+            "THIS_MONTHS_REVENUE": "This Month's Revenue",
+            "CUSTOM_REVENUE": "Revenue (Custom Range)",
+            "SERVICES_TODAY": "Services Today",
+            "SERVICES_THIS_WEEK": "Services This Week",
+            "SERVICES_THIS_MONTH": "Services This Month",
+            "SERVICES_CUSTOM": "Services (Custom Range)",
+            "CARS_IN_QUEUE": "Cars in Queue",
+            "NEW_CUSTOMERS_TODAY": "New Customers Today",
+            "NEW_CUSTOMERS_THIS_WEEK": "New Customers This Week",
+            "NEW_CUSTOMERS_THIS_MONTH": "New Customers This Month",
+            "NEW_CUSTOMERS_CUSTOM": "New Customers (Custom Range)",
+            "LOADING": "Loading...",
+            "CURRENT": "Current"
+        },
+        "CHARTS": {
+            "SERVICES_WEEK": "Services This Week",
+            "TOP_SERVICES": "Top Services"
+        },
+        "RECENT_SERVICES": {
+            "TITLE": "Recent Services",
+            "TABLE": {
+                "TIME": "Time",
+                "CUSTOMER": "Customer",
+                "CAR": "Car",
+                "SERVICE": "Service",
+                "STAFF": "Staff",
+                "STATUS": "Status"
+            },
+            "NO_DATA": "No recent services found"
+        }
     },
     "NAV": {
-      "DASHBOARD": "ዳሽቦርድ",
-      "ACCOUNTING": "ሂሳብ",
-      "STAFF": "ሰራተኞች",
-      "CUSTOMERS": "ደንበኞች",
-      "SERVICES": "አገልግሎቶች",
-      "MARKETING": "ማስታወቂያ",
-      "SETTINGS": "መቼቶች"
+        "DASHBOARD": "Dashboard",
+        "ACCOUNTING": "Accounting",
+        "STAFF": "Staff",
+        "CUSTOMERS": "Customers",
+        "SERVICES": "Services",
+        "MARKETING": "Marketing",
+        "SETTINGS": "Settings"
     },
     "ACCOUNTING": {
-      "TITLE": "ሂሳብ እና ሪፖርቶች",
-      "SUBTITLE": "የገንዘብ ሁኔታ እና የግብይት ታሪክ",
-      "KPIS": {
-        "TODAYS_REVENUE": "የዛሬ ገቢ",
-        "THIS_WEEK": "ይህ ሳምንት",
-        "THIS_MONTH": "ይህ ወር",
-        "AVG_TRANSACTION": "መካከለኛ የክፍያ መጠን",
-        "FROM_YESTERDAY": "ከትናንትና ጋር ሲነጻጸር",
-        "FROM_LAST_WEEK": "ከባለፈው ሳምንት ጋር ሲነጻጸር",
-        "FROM_LAST_MONTH": "ከባለፈው ወር ጋር ሲነጻጸር",
-        "BASED_ON": "በ {{count}} አገልግሎቶች ላይ የተመሠረተ"
-      },
-      "REVENUE_TREND": "የገቢ ልማት",
-      "CHART_PLACEHOLDER": "የገቢ ገበታ ቦታ - Chart.js ያገናኙ",
-      "RECENT_TRANSACTIONS": {
-        "TITLE": "ቅርብ ጊዜ ክፍያዎች",
-        "EXPORT_CSV": "ወደ CSV ማውጣት",
-        "TABLE": {
-          "DATE": "ቀን",
-          "CUSTOMER": "ደንበኛ",
-          "SERVICE": "አገልግሎት",
-          "AMOUNT": "መጠን",
-          "STATUS": "ሁኔታ"
+        "TITLE": "Accounting & Reports",
+        "SUBTITLE": "Financial overview and transaction history",
+        "KPIS": {
+            "TODAYS_REVENUE": "Today's Revenue",
+            "THIS_WEEK": "This Week",
+            "THIS_MONTH": "This Month",
+            "AVG_TRANSACTION": "Avg Transaction",
+            "FROM_YESTERDAY": "from yesterday",
+            "FROM_LAST_WEEK": "from last week",
+            "FROM_LAST_MONTH": "from last month",
+            "BASED_ON": "Based on {{count}} services"
         },
-        "PAID": "ተከፍሏል"
-      }
+        "REVENUE_TREND": "Revenue Trend",
+        "CHART_PLACEHOLDER": "Chart placeholder - integrate Chart.js",
+        "RECENT_TRANSACTIONS": {
+            "TITLE": "Recent Transactions",
+            "EXPORT_CSV": "Export CSV",
+            "TABLE": {
+                "DATE": "Date",
+                "CUSTOMER": "Customer",
+                "SERVICE": "Service",
+                "AMOUNT": "Amount",
+                "STATUS": "Status"
+            },
+            "PAID": "Paid"
+        }
     },
     "STAFF": {
-      "TITLE": "የሰራተኞች አስተዳደር",
-      "SUBTITLE": "የቡድንዎን አባላት እና ሚናቸውን ያቆጣጠሩ",
-      "ADD_STAFF": "ሰራተኛ ያክሉ",
-      "SEARCH_PLACEHOLDER": "በስም፣ በኢሜይል ወይም በስልክ ይፈልጉ...",
-      "FILTERS": {
-        "ALL_STAFF": "ሁሉም ሰራተኞች",
-        "ACTIVE_ONLY": "ንቁ ብቻ",
-        "INACTIVE_ONLY": "ተቋርጠው ያሉ ብቻ"
-      },
-      "TABLE": {
-        "STAFF_MEMBER": "የሰራተኛ ስም",
-        "ROLE": "ሚና",
-        "PHONE": "ስልክ",
-        "EMAIL": "ኢሜይል",
-        "STATUS": "ሁኔታ",
-        "ACTIONS": "ተግባሮች"
-      },
-      "STATUS": {
-        "ACTIVE": "ንቁ",
-        "INACTIVE": "ተቋርጧል"
-      },
-      "ACTIONS": {
-        "ACTIVATE": "ማስጀመር",
-        "DEACTIVATE": "ማቆም",
-        "VIEW_DETAILS": "ዝርዝሮች ይመልከቱ"
-      },
-      "EMPTY": {
-        "TITLE": "ምንም ሰራተኞች አልተገኙም",
-        "SUBTITLE": "ፍለጋዎን ይቀንሱ ወይም አዲስ ሰራተኛ ያክሉ"
-      },
-      "ID": "መለያ"
+        "TITLE": "Staff Management",
+        "SUBTITLE": "Manage your team members and their roles",
+        "ADD_STAFF": "Add Staff",
+        "SEARCH_PLACEHOLDER": "Search by name, email, or phone...",
+        "FILTERS": {
+            "ALL_STAFF": "All Staff",
+            "ACTIVE_ONLY": "Active Only",
+            "INACTIVE_ONLY": "Inactive Only"
+        },
+        "TABLE": {
+            "STAFF_MEMBER": "Staff Member",
+            "ROLE": "Role",
+            "PHONE": "Phone",
+            "EMAIL": "Email",
+            "STATUS": "Status",
+            "ACTIONS": "Actions"
+        },
+        "STATUS": {
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+        },
+        "ACTIONS": {
+            "ACTIVATE": "Activate",
+            "DEACTIVATE": "Deactivate",
+            "VIEW_DETAILS": "View Details"
+        },
+        "EMPTY": {
+            "TITLE": "No staff members found",
+            "SUBTITLE": "Try adjusting your search or add a new staff member"
+        },
+        "ID": "ID"
     },
     "CUSTOMERS": {
-      "TITLE": "የደንበኞች አስተዳደር",
-      "SUBTITLE": "ደንበኞችዎን እና መኪናቸውን ቀላል ያቆጣጠሩ",
-      "ADD_CUSTOMER": "ደንበኛ ያክሉ",
-      "SEARCH_PLACEHOLDER": "በስም፣ በስልክ ወይም በኢሜይል ይፈልጉ...",
-      "TABLE": {
-        "CUSTOMER": "ደንበኛ",
-        "PHONE": "ስልክ",
-        "EMAIL": "ኢሜይል",
-        "TYPE": "ዓይነት",
-        "ACTIONS": "ተግባሮች"
-      },
-      "TYPE": {
-        "CORPORATE": "ኮርፖሬት",
-        "INDIVIDUAL": "ግለሰብ",
-        "CORP": "ኮርፕ",
-        "INDIV": "ግል"
-      },
-      "EMPTY": {
-        "TITLE": "ምንም ደንበኞች አልተገኙም",
-        "SUBTITLE": "ፍለጋዎን ይቀንሱ ወይም አዲስ ደንበኛ ያክሉ"
-      },
-      "ID": "መለያ"
+        "TITLE": "Customer Management",
+        "SUBTITLE": "Manage your customers and their vehicles",
+        "ADD_CUSTOMER": "Add Customer",
+        "SEARCH_PLACEHOLDER": "Search by name, phone, or email...",
+        "TABLE": {
+            "CUSTOMER": "Customer",
+            "PHONE": "Phone",
+            "EMAIL": "Email",
+            "TYPE": "Type",
+            "ACTIONS": "Actions"
+        },
+        "TYPE": {
+            "CORPORATE": "Corporate",
+            "INDIVIDUAL": "Individual",
+            "CORP": "Corp",
+            "INDIV": "Indiv"
+        },
+        "EMPTY": {
+            "TITLE": "No customers found",
+            "SUBTITLE": "Try adjusting your search or add a new customer"
+        },
+        "ID": "ID"
     },
     "SERVICES": {
-      "TITLE": "የአገልግሎት መዝገብ",
-      "SUBTITLE": "የምታቀርቧቸውን አገልግሎቶች ይቆጣጠሩ",
-      "ADD_SERVICE": "አገልግሎት ያክሉ",
-      "FILTERS": {
-        "ALL_SERVICES": "ሁሉም አገልግሎቶች",
-        "ACTIVE_ONLY": "ንቁ ብቻ",
-        "INACTIVE_ONLY": "ተቋርጠው ያሉ ብቻ"
-      },
-      "NO_DESCRIPTION": "መግለጫ የለም",
-      "STATUS": {
-        "ACTIVE": "ንቁ",
-        "INACTIVE": "ተቋርጧል"
-      },
-      "DURATION": "{{minutes}} ደቂቃ",
-      "EMPTY": {
-        "TITLE": "ምንም አገልግሎት አልተገኘም",
-        "SUBTITLE": "የመጀመሪያውን አገልግሎት አሁን ይጨምሩ"
-      }
+        "TITLE": "Service Catalog",
+        "SUBTITLE": "Manage your service offerings",
+        "ADD_SERVICE": "Add Service",
+        "FILTERS": {
+            "ALL_SERVICES": "All Services",
+            "ACTIVE_ONLY": "Active Only",
+            "INACTIVE_ONLY": "Inactive Only"
+        },
+        "NO_DESCRIPTION": "No description",
+        "STATUS": {
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+        },
+        "DURATION": "{{minutes}} min",
+        "EMPTY": {
+            "TITLE": "No services found",
+            "SUBTITLE": "Add your first service to get started"
+        }
     },
     "MARKETING": {
-      "TITLE": "ማስታወቂያ",
-      "SUBTITLE": "ፕሮሞሽኖች እና የታማኝነት ፕሮግራሞች",
-      "COUPONS": {
-        "TITLE": "ኩፖኖች እና ቅናሾች",
-        "SUBTITLE": "የማስታወቂያ ግብዣዎችን ያቆጣጠሩ"
-      },
-      "LOYALTY": {
-        "TITLE": "የታማኝነት መቼቶች",
-        "SUBTITLE": "የታማኝነት ፕሮግራም ያቀናብሩ"
-      }
+        "TITLE": "Marketing",
+        "SUBTITLE": "Promotions and loyalty programs",
+        "COUPONS": {
+            "TITLE": "Coupons & Discounts",
+            "SUBTITLE": "Manage promotional offers"
+        },
+        "LOYALTY": {
+            "TITLE": "Loyalty Settings",
+            "SUBTITLE": "Configure loyalty program"
+        }
     },
-    "SETTINGS_ROOT": {
-      "TITLE": "መቼቶች",
-      "SUBTITLE": "የስርዓቱን ምርጫዎች እንደ ፈለጉ ያቀናብሩ"
+    "SETTINGS": {
+        "TITLE": "Settings",
+        "SUBTITLE": "Configure your system preferences",
+        "SHOPS": {
+            "TITLE": "Shops & Locations",
+            "SUBTITLE": "Manage your business locations",
+            "ADD_NEW": "Add New Shop",
+            "EDIT_SHOP": "Edit Shop",
+            "CREATE_TITLE": "Add New Store",
+            "CREATE_SUBTITLE": "Register a new shop location for your business",
+            "EDIT_TITLE": "Edit Shop",
+            "EDIT_SUBTITLE": "Update shop location details",
+            "FORM": {
+                "NAME": "Shop Name",
+                "ADDRESS": "Address",
+                "PHONE": "Phone Number",
+                "EMAIL": "Email",
+                "PLACEHOLDERS": {
+                    "NAME": "Enter shop name",
+                    "ADDRESS": "Enter shop address",
+                    "PHONE": "Enter phone number",
+                    "EMAIL": "Enter email address"
+                }
+            },
+            "STATUS": {
+                "ACTIVE": "Active",
+                "INACTIVE": "Inactive"
+            },
+            "EMPTY": {
+                "TITLE": "No shops configured",
+                "SUBTITLE": "Add your first shop location"
+            },
+            "CONFIRM_ACTIVATE": "Are you sure you want to activate {{name}}?",
+            "CONFIRM_DEACTIVATE": "Are you sure you want to deactivate {{name}}?",
+            "CONFIRM_DELETE": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+            "ERROR_STATUS": "Failed to update shop status. Please try again.",
+            "ERROR_DELETE": "Failed to delete shop. Please try again."
+        },
+        "LOCALIZATION": {
+            "TITLE": "Localization",
+            "SUBTITLE": "Language and regional settings"
+        },
+        "NOTIFICATIONS": {
+            "TITLE": "Notifications",
+            "SUBTITLE": "SMS and email preferences"
+        }
     },
     "NOTIFICATIONS": {
-      "SHOP_CREATED": "መደብሩ በሚል ተመዝግቧል",
-      "SHOP_UPDATED": "መደብሩ በሚል ተዘምኗል",
-      "SHOP_DELETED": "መደብሩ ተሰርዟል",
-      "SHOP_ACTIVATED": "መደብሩ ተጀምሯል",
-      "SHOP_DEACTIVATED": "መደብሩ ተቋርጧል",
-      "OPERATION_FAILED": "እርምጃው አልተሳካም። እባክዎን እንደገና ይሞክሩ።",
-      "OPERATION_SUCCESS": "እርምጃው በሚል ተሳክቷል"
+        "SHOP_CREATED": "Shop created successfully",
+        "SHOP_UPDATED": "Shop updated successfully",
+        "SHOP_DELETED": "Shop deleted successfully",
+        "SHOP_ACTIVATED": "Shop activated successfully",
+        "SHOP_DEACTIVATED": "Shop deactivated successfully",
+        "OPERATION_FAILED": "Operation failed. Please try again.",
+        "OPERATION_SUCCESS": "Operation completed successfully"
     },
     "MODALS": {
-      "CONFIRM_DELETE_TITLE": "ማጥፋትን ያረጋግጡ",
-      "CONFIRM_TOGGLE_TITLE": "የሁኔታ ለውጥን ያረጋግጡ",
-      "DELETE_WARNING": "ይህን እርምጃ ከወሰዱ በኋላ መመለስ አይችልም።"
+        "CONFIRM_DELETE_TITLE": "Confirm Deletion",
+        "CONFIRM_TOGGLE_TITLE": "Confirm Status Change",
+        "DELETE_WARNING": "This action cannot be undone."
     }
-  }
-  
+}
