@@ -1,0 +1,11 @@
+Django>=5.0
+djangorestframework
+django-cors-headers
+python-dotenv
+django-filter
+psycopg2-binary
+djangorestframework-simplejwt
+djoser
+Pillow
+drf-spectacular
+djangorestframework-simplejwt[crypto]

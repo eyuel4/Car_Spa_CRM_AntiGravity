@@ -1,0 +1,294 @@
+{
+    "COMMON": {
+        "ADD": "መጨመር",
+        "EDIT": "ማረም",
+        "DELETE": "አጥፍት",
+        "CANCEL": "መሰረዝ",
+        "SAVE": "ማስቀመጥ",
+        "UPDATE": "ማዘመን",
+        "ACTIVATE": "ማንቃት",
+        "DEACTIVATE": "ማቦዘን",
+        "LOADING": "በመጫን ላይ...",
+        "CONFIRM_DELETE": "{{name}}ን ማስወገድ ትፈልጋለህ/ትፈልጋለች ትረጋገጥ?",
+        "CONFIRM_ACTION": "{{action}} {{name}} ማከናወን ትፈልጋለህ/ትፈልጋለች ትረጋገጥ?",
+        "CONFIRM": "መረጃ"
+    },
+    "TOP_BAR": {
+        "SELECT_SHOP": "ሱቅ ይምረጡ",
+        "SHOP_PREFIX": "ሱቅ: ",
+        "ADD_SHOP": "ሱቅ አክል",
+        "NO_SHOPS": "ሱቅ የለም",
+        "PROFILE_SETTINGS": "መገለጫ ማቅረብ",
+        "LOGOUT": "ውጣ",
+        "ROLES": {
+            "OWNER": "ባለቤት",
+            "SHOP_ADMIN": "ሱቅ አስተዳደር",
+            "STAFF": "ሰራተኛ"
+        },
+        "LANGUAGE": "ቋንቋ"
+    },
+    "SETTINGS": {
+        "SHOPS": {
+            "TITLE": "መደብሮች እና መገኛ ቦታዎች",
+            "SUBTITLE": "የንግድዎን መገኛ ቦታዎች ያቀናብሩ",
+            "ADD_NEW": "አዲስ መደብር ያክሉ",
+            "EDIT_SHOP": "መደብር ያርትዑ",
+            "CREATE_TITLE": "አዲስ መደብር ያክሉ",
+            "CREATE_SUBTITLE": "ለንግድዎ አዲስ የመደብር መገኛ ቦታ ይመዝገቡ",
+            "EDIT_TITLE": "መደብር ያርትዑ",
+            "EDIT_SUBTITLE": "የመደብር መገኛ ዝርዝሮችን ያዘምኑ",
+            "FORM": {
+                "NAME": "ሱቅ ስም",
+                "ADDRESS": "አድራሻ",
+                "PHONE": "ስልክ ቁጥር",
+                "EMAIL": "ኢሜል",
+                "PLACEHOLDERS": {
+                    "NAME": "ሱቅ ስም ያስገቡ",
+                    "ADDRESS": "ሱቅ መገኛ አድራሻ ያስገቡ",
+                    "PHONE": "የስልክ ቁጥር ያስገቡ",
+                    "EMAIL": "የኢሜል አድራሻ ያስገቡ"
+                }
+            },
+            "STATUS": {
+                "ACTIVE": "ንቁ",
+                "INACTIVE": "እንቅስቃሴ የለሽ"
+            },
+            "EMPTY": {
+                "TITLE": "መደብሮች አልተዘጋጁም",
+                "SUBTITLE": "የመጀመሪያውን ሱቅ ያክሉ"
+            }
+        }
+    },
+    "DASHBOARD": {
+        "TITLE": "ዳሽቦርድ",
+        "SUBTITLE": "የመኪና ስፓ ንብረትዎ አጠቃላይ እይታ",
+        "FILTERS": {
+            "TODAY": "ዛሬ",
+            "THIS_WEEK": "እርስዎቹ ሳምንት",
+            "THIS_MONTH": "እርስዎቹ ወር",
+            "CUSTOM": "ተወዳዳሪ ርቀት"
+        },
+        "REFRESH": "እንደገና መጫን",
+        "LAST_UPDATED": "መጨረሻ የተዘመነ፡",
+        "KPIS": {
+            "TODAYS_REVENUE": "የዛሬ ገቢ",
+            "THIS_WEEKS_REVENUE": "የዚህ ሳምንት ገቢ",
+            "THIS_MONTHS_REVENUE": "የዚህ ወር ገቢ",
+            "CUSTOM_REVENUE": "ገቢ (ተወዳዳሪ ርቀት)",
+            "SERVICES_TODAY": "የዛሬ አገልግሎቶች",
+            "SERVICES_THIS_WEEK": "የዚህ ሳምንት አገልግሎቶች",
+            "SERVICES_THIS_MONTH": "የዚህ ወር አገልግሎቶች",
+            "SERVICES_CUSTOM": "አገልግሎቶች (ተወዳዳሪ ርቀት)",
+            "CARS_IN_QUEUE": "በረድ ውስጥ ያሉ መኪኖች",
+            "NEW_CUSTOMERS_TODAY": "የዛሬ አዲስ ደንበኞች",
+            "NEW_CUSTOMERS_THIS_WEEK": "የዚህ ሳምንት አዲስ ደንበኞች",
+            "NEW_CUSTOMERS_THIS_MONTH": "የዚህ ወር አዲስ ደንበኞች",
+            "NEW_CUSTOMERS_CUSTOM": "አዲስ ደንበኞች (ተወዳዳሪ ርቀት)",
+            "LOADING": "በመጫን ላይ...",
+            "CURRENT": "አሁን"
+        },
+        "CHARTS": {
+            "SERVICES_WEEK": "በዚህ ሳምንት የተሰጡ አገልግሎቶች",
+            "TOP_SERVICES": "ታላቅ አገልግሎቶች"
+        },
+        "RECENT_SERVICES": {
+            "TITLE": "የቅርብ ጊዜ አገልግሎቶች",
+            "TABLE": {
+                "TIME": "ሰዓት",
+                "CUSTOMER": "ደንበኛ",
+                "CAR": "መኪና",
+                "SERVICE": "አገልግሎት",
+                "STAFF": "ሰራተኛ",
+                "STATUS": "ሁኔታ"
+            },
+            "NO_DATA": "የቅርብ ጊዜ አገልግሎት አልተገኘም"
+        }
+    },
+    "NAV": {
+        "DASHBOARD": "ዳሽቦርድ",
+        "ACCOUNTING": "ሂሳብ",
+        "STAFF": "ሰራተኞች",
+        "CUSTOMERS": "ደንበኞች",
+        "SERVICES": "አገልግሎቶች",
+        "MARKETING": "ገበያ ማስታወቂያ",
+        "SETTINGS": "ቅንብሮች"
+    },
+    "ACCOUNTING": {
+        "TITLE": "ሂሳብ እና ሪፖርቶች",
+        "SUBTITLE": "የፋይናንስ አጠቃላይ እይታ እና የግብይት ታሪክ",
+        "KPIS": {
+            "TODAYS_REVENUE": "የዛሬ ገቢ",
+            "THIS_WEEK": "የሳምንት ገቢ",
+            "THIS_MONTH": "የዚህ ወር ገቢ",
+            "AVG_TRANSACTION": "አማካይ ግብይት",
+            "FROM_YESTERDAY": "ከትላልት",
+            "FROM_LAST_WEEK": "ከባለፈው ሳምንት",
+            "FROM_LAST_MONTH": "ከባለፈው ወር",
+            "BASED_ON": "በ{{count}} አገልግሎቶች ላይ የተመሰረተ"
+        },
+        "REVENUE_TREND": "የገቢ አዝማሚያ",
+        "CHART_PLACEHOLDER": "የገበታ ምልክት - Chart.js ያዋህዱ",
+        "RECENT_TRANSACTIONS": {
+            "TITLE": "የቅርብ ጊዜ ግብይቶች",
+            "EXPORT_CSV": "CSV ወደ ውጭ ላክ",
+            "TABLE": {
+                "DATE": "ቀን",
+                "CUSTOMER": "ደንበኛ",
+                "SERVICE": "አገልግሎት",
+                "AMOUNT": "መጠን",
+                "STATUS": "ሁኔታ"
+            },
+            "PAID": "የተከፈለ"
+        }
+    },
+    "STAFF": {
+        "TITLE": "የሰራተኞች አስተዳደር",
+        "SUBTITLE": "የቡድንዎን አባላት እና ሚናቸውን ያቀናብሩ",
+        "ADD_STAFF": "ሰራተኛ ያክሉ",
+        "SEARCH_PLACEHOLDER": "በስም፣ ኢሜል ወይም ስልክ ይፈልጉ...",
+        "FILTERS": {
+            "ALL_STAFF": "ሁሉም ሰራተኞች",
+            "ACTIVE_ONLY": "ንቁ ብቻ",
+            "INACTIVE_ONLY": "እንቅስቃሴ የሌላቸው ብቻ"
+        },
+        "TABLE": {
+            "STAFF_MEMBER": "የሰራተኛ አባል",
+            "ROLE": "ሚና",
+            "PHONE": "ስልክ",
+            "EMAIL": "ኢሜል",
+            "STATUS": "ሁኔታ",
+            "ACTIONS": "ድርጊቶች"
+        },
+        "STATUS": {
+            "ACTIVE": "ንቁ",
+            "INACTIVE": "እንቅስቃሴ የሌለ"
+        },
+        "ACTIONS": {
+            "ACTIVATE": "አግብት",
+            "DEACTIVATE": "አቦዝን",
+            "VIEW_DETAILS": "ዝርዝሮችን ይመልከቱ"
+        },
+        "EMPTY": {
+            "TITLE": "ሰራተኞች አልተገኙም",
+            "SUBTITLE": "ፍለጋዎን ይስተካከሉ ወይም አዲስ ሰራተኛ ያክሉ"
+        },
+        "ID": "መለያ"
+    },
+    "CUSTOMERS": {
+        "TITLE": "የደንበኞች አስተዳደር",
+        "SUBTITLE": "ደንበኞችዎን እና ተሽከርካሪዎቻቸውን ያቀናብሩ",
+        "ADD_CUSTOMER": "ደንበኛ ያክሉ",
+        "SEARCH_PLACEHOLDER": "በስም፣ ስልክ ወይም ኢሜል ይፈልጉ...",
+        "TABLE": {
+            "CUSTOMER": "ደንበኛ",
+            "PHONE": "ስልክ",
+            "EMAIL": "ኢሜል",
+            "TYPE": "ዓይነት",
+            "ACTIONS": "ድርጊቶች"
+        },
+        "TYPE": {
+            "CORPORATE": "የኩባንያ",
+            "INDIVIDUAL": "ግለሰብ",
+            "CORP": "ኩባ",
+            "INDIV": "ግለ"
+        },
+        "EMPTY": {
+            "TITLE": "ደንበኞች አልተገኙም",
+            "SUBTITLE": "ፍለጋዎን ይስተካከሉ ወይም አዲስ ደንበኛ ያክሉ"
+        },
+        "ID": "መለያ"
+    },
+    "SERVICES": {
+        "TITLE": "የአገልግሎት ካታሎግ",
+        "SUBTITLE": "የአገልግሎት ቅናሾችዎን ያቀናብሩ",
+        "ADD_SERVICE": "አገልግሎት ያክሉ",
+        "FILTERS": {
+            "ALL_SERVICES": "ሁሉም አገልግሎቶች",
+            "ACTIVE_ONLY": "ንቁ ብቻ",
+            "INACTIVE_ONLY": "እንቅስቃሴ የሌላቸው ብቻ"
+        },
+        "NO_DESCRIPTION": "መግለጫ የለም",
+        "STATUS": {
+            "ACTIVE": "ንቁ",
+            "INACTIVE": "እንቅስቃሴ የሌለ"
+        },
+        "DURATION": "{{minutes}} ደቂቃ",
+        "EMPTY": {
+            "TITLE": "አገልግሎቶች አልተገኙም",
+            "SUBTITLE": "ለመጀመር የመጀመሪያውን አገልግሎትዎን ያክሉ"
+        }
+    },
+    "MARKETING": {
+        "TITLE": "ገበያ ማስታወቂያ",
+        "SUBTITLE": "ማስተዋወቂያዎች እና የመጣል ፕሮግራሞች",
+        "COUPONS": {
+            "TITLE": "ኩፐኖች እና ቅናሾች",
+            "SUBTITLE": "ማስተዋወቂያ ቅናሾችን ያቀናብሩ"
+        },
+        "LOYALTY": {
+            "TITLE": "የመጣል ቅንብሮች",
+            "SUBTITLE": "የመጣል ፕሮግራምን ያውቁሩ"
+        }
+    },
+    "SETTINGS": {
+        "TITLE": "መቼቶች",
+        "SUBTITLE": "የስርዓት ምርጫዎችን ያዋቅሩ",
+        "SHOPS": {
+            "TITLE": "መደብሮች እና ቦታዎች",
+            "SUBTITLE": "የንግድዎን ቦታዎች ያቀናብሩ",
+            "ADD_NEW": "አዲስ መደብር ያክሉ",
+            "EDIT_SHOP": "መደብር ያርትሙ",
+            "CREATE_TITLE": "አዲስ መደብር ያክሉ",
+            "CREATE_SUBTITLE": "ለንግድዎ አዲስ የመደብር ቦታ ይመዝገቡ",
+            "EDIT_TITLE": "መደብር ያርትሙ",
+            "EDIT_SUBTITLE": "የመደብር ቦታ ዝርዝሮችን ያዘምኑ",
+            "FORM": {
+                "NAME": "የመደብር ስም",
+                "ADDRESS": "አድራሻ",
+                "PHONE": "ስልክ ቁጥር",
+                "EMAIL": "ኢሜይል",
+                "PLACEHOLDERS": {
+                    "NAME": "የመደብር ስም ያስገቡ",
+                    "ADDRESS": "የመደብር አድራሻ ያስገቡ",
+                    "PHONE": "ስልክ ቁጥር ያስገቡ",
+                    "EMAIL": "ኢሜይል አድራሻ ያስገቡ"
+                }
+            },
+            "STATUS": {
+                "ACTIVE": "ንቁ",
+                "INACTIVE": "ንቁ ያልሆነ"
+            },
+            "EMPTY": {
+                "TITLE": "መደብሮች አልተቋቋመም",
+                "SUBTITLE": "የመጀመሪያውን መደብር ይጨምሩ"
+            },
+            "CONFIRM_ACTIVATE": "መደብሩን {{name}} ማስጀመር እርግጠኛ ኖት?",
+            "CONFIRM_DEACTIVATE": "መደብሩን {{name}} ማቋረጥ እርግጠኛ ኖት?",
+            "CONFIRM_DELETE": "{{name}} ንዲሰረዝ እርግጠኛ ኖት? ይህ እርምጃ አይተመለስም.",
+            "ERROR_STATUS": "የመደብር ሁኔታ ማዘመን አልተሳካም። እባክዎ እንደገና ይሞክሩ።",
+            "ERROR_DELETE": "መደብር ማጥፋት አልተሳካም። እባክዎ እንደገና ይሞክሩ።"
+        },
+        "LOCALIZATION": {
+            "TITLE": "አካባቢ ቅንብሮች",
+            "SUBTITLE": "ቋንቋ እና ክልላዊ ቅንብሮች"
+        },
+        "NOTIFICATIONS": {
+            "TITLE": "ማሳወቂያዎች",
+            "SUBTITLE": "የኤስኤምኤስ እና ኢሜይል ምርጫዎች"
+        }
+    },
+    "NOTIFICATIONS": {
+        "SHOP_CREATED": "Shop created successfully",
+        "SHOP_UPDATED": "Shop updated successfully",
+        "SHOP_DELETED": "Shop deleted successfully",
+        "SHOP_ACTIVATED": "Shop activated successfully",
+        "SHOP_DEACTIVATED": "Shop deactivated successfully",
+        "OPERATION_FAILED": "Operation failed. Please try again.",
+        "OPERATION_SUCCESS": "Operation completed successfully"
+    },
+    "MODALS": {
+        "CONFIRM_DELETE_TITLE": "Confirm Deletion",
+        "CONFIRM_TOGGLE_TITLE": "Confirm Status Change",
+        "DELETE_WARNING": "This action cannot be undone."
+    }
+}

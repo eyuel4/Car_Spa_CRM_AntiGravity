@@ -1,0 +1,8 @@
+# Spectacular settings for API documentation
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Car Spa CRM API',
+    'DESCRIPTION': 'REST API for Car Spa CRM - Multi-tenant SaaS platform',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+}

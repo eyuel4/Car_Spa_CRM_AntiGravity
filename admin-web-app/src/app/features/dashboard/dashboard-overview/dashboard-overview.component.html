@@ -1,0 +1,194 @@
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ 'DASHBOARD.TITLE' | translate }}</h1>
+            <p class="text-gray-600 mt-1">{{ 'DASHBOARD.SUBTITLE' | translate }}</p>
+        </div>
+        <div class="flex gap-2">
+            <!-- Time Period Filter -->
+            <select [(ngModel)]="selectedTimePeriod" (change)="onTimePeriodChange(selectedTimePeriod)"
+                class="btn btn-secondary">
+                <option value="today">{{ 'DASHBOARD.FILTERS.TODAY' | translate }}</option>
+                <option value="this_week">{{ 'DASHBOARD.FILTERS.THIS_WEEK' | translate }}</option>
+                <option value="this_month">{{ 'DASHBOARD.FILTERS.THIS_MONTH' | translate }}</option>
+                <option value="custom">{{ 'DASHBOARD.FILTERS.CUSTOM' | translate }}</option>
+            </select>
+
+            <!-- Custom Date Range Picker -->
+            <div *ngIf="showCustomDatePicker" class="flex gap-2 items-center">
+                <input type="date" [value]="getCustomDateFromValue()" (change)="onCustomDateFromChange($event)"
+                    class="input-field" placeholder="From">
+                <span class="text-gray-600">to</span>
+                <input type="date" [value]="getCustomDateToValue()" (change)="onCustomDateToChange($event)"
+                    class="input-field" placeholder="To">
+            </div>
+
+            <!-- Refresh Button -->
+            <button class="btn btn-secondary" (click)="refreshAll()" [disabled]="isRefreshing">
+                <svg *ngIf="!isRefreshing" class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                    </path>
+                </svg>
+                <svg *ngIf="isRefreshing" class="animate-spin w-5 h-5 mr-2 inline" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+                {{ 'DASHBOARD.REFRESH' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div *ngFor="let kpi of kpis" class="card">
+            <div class="flex items-center justify-between">
+                <div class="flex-1">
+                    <p class="text-sm text-gray-600">{{ kpi.label }}</p>
+                    <p class="text-2xl font-bold text-gray-900 mt-1">
+                        <span *ngIf="!isRefreshing">{{ kpi.value }}</span>
+                        <span *ngIf="isRefreshing" class="text-gray-400">...</span>
+                    </p>
+                    <p class="text-xs text-green-600 mt-1">{{ kpi.change }}</p>
+                </div>
+                <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="kpi.icon">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Last Update Label -->
+    <div class="text-sm text-gray-500 text-center">
+        {{ 'DASHBOARD.LAST_UPDATED' | translate }} {{ formatLastUpdate() }}
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="card">
+            <h3 class="text-lg font-semibold mb-4">{{ 'DASHBOARD.CHARTS.SERVICES_WEEK' | translate }}</h3>
+            <div class="h-64">
+                <canvas #servicesWeekChart></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="text-lg font-semibold mb-4">{{ 'DASHBOARD.CHARTS.TOP_SERVICES' | translate }}</h3>
+            <div class="h-64">
+                <canvas #topServicesChart></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Services Table -->
+    <div class="card">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold">{{ 'DASHBOARD.RECENT_SERVICES.TITLE' | translate }}</h3>
+            <button class="text-primary-600 hover:text-primary-800 flex items-center gap-2"
+                (click)="refreshRecentServices()" [disabled]="isRefreshing">
+                <svg *ngIf="!isRefreshing" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                    </path>
+                </svg>
+                <svg *ngIf="isRefreshing" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+                {{ 'DASHBOARD.REFRESH' | translate }}
+            </button>
+        </div>
+
+        <!-- Desktop Table -->
+        <div class="hidden sm:block overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{
+                            'DASHBOARD.RECENT_SERVICES.TABLE.TIME' | translate }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{
+                            'DASHBOARD.RECENT_SERVICES.TABLE.CUSTOMER' | translate }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{
+                            'DASHBOARD.RECENT_SERVICES.TABLE.CAR' | translate }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{
+                            'DASHBOARD.RECENT_SERVICES.TABLE.SERVICE' | translate }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{
+                            'DASHBOARD.RECENT_SERVICES.TABLE.STAFF' | translate }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{
+                            'DASHBOARD.RECENT_SERVICES.TABLE.STATUS' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr *ngFor="let service of recentServices" class="hover:bg-gray-50">
+                        <td class="px-4 py-3 text-sm">{{ service.time || '-' }}</td>
+                        <td class="px-4 py-3 text-sm font-medium">{{ service.customer }}</td>
+                        <td class="px-4 py-3 text-sm">{{ service.car }}</td>
+                        <td class="px-4 py-3 text-sm">{{ service.service }}</td>
+                        <td class="px-4 py-3 text-sm">{{ service.staff }}</td>
+                        <td class="px-4 py-3">
+                            <span [class]="getStatusClass(service.status)">
+                                {{ service.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr *ngIf="recentServices.length === 0 && !isRefreshing">
+                        <td colspan="6" class="px-4 py-8 text-center text-gray-500">
+                            {{ 'DASHBOARD.RECENT_SERVICES.NO_DATA' | translate }}
+                        </td>
+                    </tr>
+                    <tr *ngIf="isRefreshing">
+                        <td colspan="6" class="px-4 py-8 text-center">
+                            <svg class="animate-spin h-6 w-6 text-primary-600 mx-auto" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="sm:hidden space-y-3">
+            <div *ngFor="let service of recentServices" class="bg-gray-50 rounded-lg p-4">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <p class="font-medium text-gray-900">{{ service.customer }}</p>
+                        <p class="text-sm text-gray-600">{{ service.car }}</p>
+                    </div>
+                    <span [class]="getStatusClass(service.status)">
+                        {{ service.status }}
+                    </span>
+                </div>
+                <div class="text-sm text-gray-600 space-y-1">
+                    <p>{{ 'DASHBOARD.RECENT_SERVICES.TABLE.SERVICE' | translate }}: {{ service.service }}</p>
+                    <p>{{ 'DASHBOARD.RECENT_SERVICES.TABLE.STAFF' | translate }}: {{ service.staff }}</p>
+                    <p>{{ 'DASHBOARD.RECENT_SERVICES.TABLE.TIME' | translate }}: {{ service.time || '-' }}</p>
+                </div>
+            </div>
+            <div *ngIf="recentServices.length === 0 && !isRefreshing" class="text-center text-gray-500 py-8">
+                {{ 'DASHBOARD.RECENT_SERVICES.NO_DATA' | translate }}
+            </div>
+            <div *ngIf="isRefreshing" class="text-center py-8">
+                <svg class="animate-spin h-6 w-6 text-primary-600 mx-auto" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="min-h-screen bg-gray-50">
+  <app-top-bar></app-top-bar>
+
+  <div class="flex">
+    <!-- Desktop Side Navigation -->
+    <div class="hidden md:block">
+      <app-side-nav></app-side-nav>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-4 md:p-6 pb-20 md:pb-6">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <div class="md:hidden">
+    <app-bottom-nav></app-bottom-nav>
+  </div>
+</div>

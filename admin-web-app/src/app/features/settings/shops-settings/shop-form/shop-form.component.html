@@ -1,0 +1,90 @@
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div class="flex items-center gap-4">
+            <button (click)="onCancel()" class="btn btn-secondary">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">{{ (isEditMode ? 'SETTINGS.SHOPS.EDIT_TITLE' :
+                    'SETTINGS.SHOPS.CREATE_TITLE') | translate }}</h1>
+                <p class="text-gray-600">{{ (isEditMode ? 'SETTINGS.SHOPS.EDIT_SUBTITLE' :
+                    'SETTINGS.SHOPS.CREATE_SUBTITLE') | translate }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="card bg-red-50 border border-red-200">
+        <div class="flex items-center gap-2 text-red-800">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-sm font-medium">{{ errorMessage }}</p>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <form (ngSubmit)="onSubmit()" class="card space-y-6">
+        <!-- Shop Name -->
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                {{ 'SETTINGS.SHOPS.FORM.NAME' | translate }} <span class="text-red-500">*</span>
+            </label>
+            <input type="text" id="name" name="name" [(ngModel)]="shop.name" required class="input-field"
+                [placeholder]="'SETTINGS.SHOPS.FORM.PLACEHOLDERS.NAME' | translate" />
+        </div>
+
+        <!-- Address -->
+        <div>
+            <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
+                {{ 'SETTINGS.SHOPS.FORM.ADDRESS' | translate }}
+            </label>
+            <textarea id="address" name="address" [(ngModel)]="shop.address" rows="3" rows="3" class="input-field"
+                [placeholder]="'SETTINGS.SHOPS.FORM.PLACEHOLDERS.ADDRESS' | translate"></textarea>
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+            <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-2">
+                {{ 'SETTINGS.SHOPS.FORM.PHONE' | translate }}
+            </label>
+            <input type="tel" id="phone_number" name="phone_number" [(ngModel)]="shop.phone_number" class="input-field"
+                [placeholder]="'SETTINGS.SHOPS.FORM.PLACEHOLDERS.PHONE' | translate" />
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                {{ 'SETTINGS.SHOPS.FORM.EMAIL' | translate }}
+            </label>
+            <input type="email" id="email" name="email" [(ngModel)]="shop.email" class="input-field"
+                [placeholder]="'SETTINGS.SHOPS.FORM.PLACEHOLDERS.EMAIL' | translate" />
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+            <button type="button" (click)="onCancel()" class="btn btn-secondary" [disabled]="isSubmitting">
+                {{ 'COMMON.CANCEL' | translate }}
+            </button>
+            <button type="submit" class="btn btn-primary"
+                [disabled]="isSubmitting || !shop.name || shop.name.trim() === ''">
+                <span *ngIf="!isSubmitting">{{ (isEditMode ? 'COMMON.UPDATE' : 'SETTINGS.SHOPS.CREATE_TITLE') |
+                    translate }}</span>
+                <span *ngIf="isSubmitting" class="flex items-center gap-2">
+                    <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    {{ 'COMMON.LOADING' | translate }}
+                </span>
+            </button>
+        </div>
+    </form>
+</div>

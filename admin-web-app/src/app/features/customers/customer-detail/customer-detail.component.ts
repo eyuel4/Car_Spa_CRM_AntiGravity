@@ -1,0 +1,212 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CustomerService } from '../../../core/services/customer.service';
+import { Customer, Car } from '../../../core/models/business.model';
+
+@Component({
+  selector: 'app-customer-detail',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <div class="space-y-6" *ngIf="customer">
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div class="flex items-center gap-4">
+          <button (click)="goBack()" class="btn btn-secondary">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ customer.first_name }} {{ customer.last_name }}</h1>
+            <p class="text-gray-600">Customer ID: {{ customer.id }}</p>
+          </div>
+        </div>
+        <button class="btn btn-primary">
+          Edit Customer
+        </button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="card">
+        <div class="border-b border-gray-200">
+          <nav class="flex overflow-x-auto -mb-px">
+            <button
+              *ngFor="let tab of tabs"
+              (click)="activeTab = tab.id"
+              [class.border-primary-600]="activeTab === tab.id"
+              [class.text-primary-600]="activeTab === tab.id"
+              [class.border-transparent]="activeTab !== tab.id"
+              [class.text-gray-500]="activeTab !== tab.id"
+              class="whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm hover:text-gray-700 hover:border-gray-300 min-h-[48px]"
+            >
+              {{ tab.label }}
+            </button>
+          </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="p-6">
+          <!-- Profile Tab -->
+          <div *ngIf="activeTab === 'profile'" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="text-sm font-medium text-gray-500">First Name</label>
+                <p class="mt-1 text-gray-900">{{ customer.first_name }}</p>
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-500">Last Name</label>
+                <p class="mt-1 text-gray-900">{{ customer.last_name }}</p>
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-500">Phone Number</label>
+                <p class="mt-1 text-gray-900">{{ customer.phone_number }}</p>
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-500">Email</label>
+                <p class="mt-1 text-gray-900">{{ customer.email || '-' }}</p>
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-500">Customer Type</label>
+                <p class="mt-1">
+                  <span [class]="customer.is_corporate ? 'px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800' : 'px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800'">
+                    {{ customer.is_corporate ? 'Corporate' : 'Individual' }}
+                  </span>
+                </p>
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-500">Member Since</label>
+                <p class="mt-1 text-gray-900">{{ customer.created_at | date }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cars Tab -->
+          <div *ngIf="activeTab === 'cars'" class="space-y-4">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-medium">Vehicles</h3>
+              <button class="btn btn-primary">Add Vehicle</button>
+            </div>
+
+            <div *ngIf="cars.length === 0" class="text-center py-8 text-gray-500">
+              No vehicles registered
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div *ngFor="let car of cars" class="border border-gray-200 rounded-lg p-4">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <h4 class="font-medium text-gray-900">{{ car.make }} {{ car.model }}</h4>
+                    <p class="text-sm text-gray-600">{{ car.plate_number }}</p>
+                  </div>
+                  <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                  </svg>
+                </div>
+                <div class="mt-3 text-sm text-gray-600 space-y-1">
+                  <p *ngIf="car.year">Year: {{ car.year }}</p>
+                  <p *ngIf="car.color">Color: {{ car.color }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service History Tab -->
+          <div *ngIf="activeTab === 'history'" class="space-y-4">
+            <h3 class="text-lg font-medium mb-4">Service History</h3>
+            <div class="text-center py-8 text-gray-500">
+              Service history will be displayed here
+            </div>
+          </div>
+
+          <!-- Loyalty Tab -->
+          <div *ngIf="activeTab === 'loyalty'" class="space-y-4">
+            <h3 class="text-lg font-medium mb-4">Loyalty Program</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="card bg-gradient-to-br from-primary-50 to-primary-100">
+                <p class="text-sm text-gray-600">Points Balance</p>
+                <p class="text-3xl font-bold text-primary-600">0</p>
+              </div>
+              <div class="card">
+                <p class="text-sm text-gray-600">Current Tier</p>
+                <p class="text-xl font-semibold text-gray-900">Blue</p>
+              </div>
+              <div class="card">
+                <p class="text-sm text-gray-600">Total Visits</p>
+                <p class="text-xl font-semibold text-gray-900">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="!customer && isLoading" class="card">
+      <div class="flex items-center justify-center py-12">
+        <svg class="animate-spin h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </div>
+    </div>
+  `,
+  styles: []
+})
+export class CustomerDetailComponent implements OnInit {
+  customer: Customer | null = null;
+  cars: Car[] = [];
+  activeTab = 'profile';
+  isLoading = false;
+
+  tabs = [
+    { id: 'profile', label: 'Profile' },
+    { id: 'cars', label: 'Vehicles' },
+    { id: 'history', label: 'Service History' },
+    { id: 'loyalty', label: 'Loyalty' }
+  ];
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private customerService: CustomerService
+  ) { }
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id && id !== 'new') {
+      this.loadCustomer(parseInt(id));
+      this.loadCars(parseInt(id));
+    }
+  }
+
+  loadCustomer(id: number): void {
+    this.isLoading = true;
+    this.customerService.getById(id).subscribe({
+      next: (data) => {
+        this.customer = data;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading customer:', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  loadCars(customerId: number): void {
+    this.customerService.getCars(customerId).subscribe({
+      next: (data) => {
+        this.cars = data;
+      },
+      error: (error) => {
+        console.error('Error loading cars:', error);
+      }
+    });
+  }
+
+  goBack(): void {
+    this.router.navigate(['/customers']);
+  }
+}

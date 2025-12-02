@@ -1,0 +1,260 @@
+{
+    "COMMON": {
+        "ADD": "Agregar",
+        "EDIT": "Editar",
+        "DELETE": "Eliminar",
+        "CANCEL": "Cancelar",
+        "SAVE": "Guardar",
+        "UPDATE": "Actualizar",
+        "ACTIVATE": "Activar",
+        "DEACTIVATE": "Desactivar",
+        "LOADING": "Cargando...",
+        "CONFIRM_DELETE": "¿Está seguro de que desea eliminar {{name}}?",
+        "CONFIRM_ACTION": "¿Está seguro de que desea {{action}} {{name}}?",
+        "CONFIRM": "Confirm"
+    },
+    "TOP_BAR": {
+        "SELECT_SHOP": "Seleccionar Tienda",
+        "SHOP_PREFIX": "Tienda: ",
+        "ADD_SHOP": "Agregar Tienda",
+        "NO_SHOPS": "No hay tiendas disponibles",
+        "PROFILE_SETTINGS": "Configuración de Perfil",
+        "LOGOUT": "Cerrar Sesión",
+        "ROLES": {
+            "OWNER": "Propietario",
+            "SHOP_ADMIN": "Admin de Tienda",
+            "STAFF": "Personal"
+        },
+        "LANGUAGE": "Idioma"
+    },
+    "SETTINGS": {
+        "SHOPS": {
+            "TITLE": "Tiendas y Ubicaciones",
+            "SUBTITLE": "Administre las ubicaciones de su negocio",
+            "ADD_NEW": "Agregar Nueva Tienda",
+            "EDIT_SHOP": "Editar Tienda",
+            "CREATE_TITLE": "Agregar Nueva Tienda",
+            "CREATE_SUBTITLE": "Registre una nueva ubicación para su negocio",
+            "EDIT_TITLE": "Editar Tienda",
+            "EDIT_SUBTITLE": "Actualice los detalles de la ubicación",
+            "FORM": {
+                "NAME": "Nombre de la Tienda",
+                "ADDRESS": "Dirección",
+                "PHONE": "Número de Teléfono",
+                "EMAIL": "Correo Electrónico",
+                "PLACEHOLDERS": {
+                    "NAME": "Ingrese nombre de la tienda",
+                    "ADDRESS": "Ingrese dirección de la tienda",
+                    "PHONE": "Ingrese número de teléfono",
+                    "EMAIL": "Ingrese correo electrónico"
+                }
+            },
+            "STATUS": {
+                "ACTIVE": "Activo",
+                "INACTIVE": "Inactivo"
+            },
+            "EMPTY": {
+                "TITLE": "No hay tiendas configuradas",
+                "SUBTITLE": "Agregue su primera ubicación"
+            },
+            "CONFIRM_ACTIVATE": "¿Está seguro de que desea activar {{name}}?",
+            "CONFIRM_DEACTIVATE": "¿Está seguro de que desea desactivar {{name}}?",
+            "CONFIRM_DELETE": "¿Está seguro de que desea eliminar {{name}}? Esta acción no se puede deshacer.",
+            "ERROR_STATUS": "Error al actualizar el estado de la tienda. Inténtelo de nuevo.",
+            "ERROR_DELETE": "Error al eliminar la tienda. Inténtelo de nuevo."
+        },
+        "LOCALIZATION": {
+            "TITLE": "Localización",
+            "SUBTITLE": "Idioma y configuración regional"
+        },
+        "NOTIFICATIONS": {
+            "TITLE": "Notificaciones",
+            "SUBTITLE": "Preferencias de SMS y correo electrónico"
+        }
+    },
+    "DASHBOARD": {
+        "TITLE": "Panel de Control",
+        "SUBTITLE": "Resumen de operaciones de su car spa",
+        "FILTERS": {
+            "TODAY": "Hoy",
+            "THIS_WEEK": "Esta Semana",
+            "THIS_MONTH": "Este Mes",
+            "CUSTOM": "Rango Personalizado"
+        },
+        "REFRESH": "Actualizar",
+        "LAST_UPDATED": "Última actualización:",
+        "KPIS": {
+            "TODAYS_REVENUE": "Ingresos de Hoy",
+            "THIS_WEEKS_REVENUE": "Ingresos de Esta Semana",
+            "THIS_MONTHS_REVENUE": "Ingresos de Este Mes",
+            "CUSTOM_REVENUE": "Ingresos (Rango Personalizado)",
+            "SERVICES_TODAY": "Servicios de Hoy",
+            "SERVICES_THIS_WEEK": "Servicios Esta Semana",
+            "SERVICES_THIS_MONTH": "Servicios Este Mes",
+            "SERVICES_CUSTOM": "Servicios (Rango Personalizado)",
+            "CARS_IN_QUEUE": "Vehículos en Cola",
+            "NEW_CUSTOMERS_TODAY": "Nuevos Clientes Hoy",
+            "NEW_CUSTOMERS_THIS_WEEK": "Nuevos Clientes Esta Semana",
+            "NEW_CUSTOMERS_THIS_MONTH": "Nuevos Clientes Este Mes",
+            "NEW_CUSTOMERS_CUSTOM": "Nuevos Clientes (Rango Personalizado)",
+            "LOADING": "Cargando...",
+            "CURRENT": "Actual"
+        },
+        "CHARTS": {
+            "SERVICES_WEEK": "Servicios Esta Semana",
+            "TOP_SERVICES": "Servicios Principales"
+        },
+        "RECENT_SERVICES": {
+            "TITLE": "Servicios Recientes",
+            "TABLE": {
+                "TIME": "Hora",
+                "CUSTOMER": "Cliente",
+                "CAR": "Vehículo",
+                "SERVICE": "Servicio",
+                "STAFF": "Personal",
+                "STATUS": "Estado"
+            },
+            "NO_DATA": "No se encontraron servicios recientes"
+        }
+    },
+    "NAV": {
+        "DASHBOARD": "Panel de Control",
+        "ACCOUNTING": "Contabilidad",
+        "STAFF": "Personal",
+        "CUSTOMERS": "Clientes",
+        "SERVICES": "Servicios",
+        "MARKETING": "Marketing",
+        "SETTINGS": "Configuración"
+    },
+    "ACCOUNTING": {
+        "TITLE": "Contabilidad e Informes",
+        "SUBTITLE": "Resumen financiero e historial de transacciones",
+        "KPIS": {
+            "TODAYS_REVENUE": "Ingresos de Hoy",
+            "THIS_WEEK": "Esta Semana",
+            "THIS_MONTH": "Este Mes",
+            "AVG_TRANSACTION": "Transacción Promedio",
+            "FROM_YESTERDAY": "desde ayer",
+            "FROM_LAST_WEEK": "desde la semana pasada",
+            "FROM_LAST_MONTH": "desde el mes pasado",
+            "BASED_ON": "Basado en {{count}} servicios"
+        },
+        "REVENUE_TREND": "Tendencia de Ingresos",
+        "CHART_PLACEHOLDER": "Marcador de posición del gráfico - integrar Chart.js",
+        "RECENT_TRANSACTIONS": {
+            "TITLE": "Transacciones Recientes",
+            "EXPORT_CSV": "Exportar CSV",
+            "TABLE": {
+                "DATE": "Fecha",
+                "CUSTOMER": "Cliente",
+                "SERVICE": "Servicio",
+                "AMOUNT": "Monto",
+                "STATUS": "Estado"
+            },
+            "PAID": "Pagado"
+        }
+    },
+    "STAFF": {
+        "TITLE": "Gestión de Personal",
+        "SUBTITLE": "Administre los miembros de su equipo y sus roles",
+        "ADD_STAFF": "Agregar Personal",
+        "SEARCH_PLACEHOLDER": "Buscar por nombre, correo o teléfono...",
+        "FILTERS": {
+            "ALL_STAFF": "Todo el Personal",
+            "ACTIVE_ONLY": "Solo Activos",
+            "INACTIVE_ONLY": "Solo Inactivos"
+        },
+        "TABLE": {
+            "STAFF_MEMBER": "Miembro del Personal",
+            "ROLE": "Rol",
+            "PHONE": "Teléfono",
+            "EMAIL": "Correo",
+            "STATUS": "Estado",
+            "ACTIONS": "Acciones"
+        },
+        "STATUS": {
+            "ACTIVE": "Activo",
+            "INACTIVE": "Inactivo"
+        },
+        "ACTIONS": {
+            "ACTIVATE": "Activar",
+            "DEACTIVATE": "Desactivar",
+            "VIEW_DETAILS": "Ver Detalles"
+        },
+        "EMPTY": {
+            "TITLE": "No se encontraron miembros del personal",
+            "SUBTITLE": "Intente ajustar su búsqueda o agregue un nuevo miembro del personal"
+        },
+        "ID": "ID"
+    },
+    "CUSTOMERS": {
+        "TITLE": "Gestión de Clientes",
+        "SUBTITLE": "Administre sus clientes y sus vehículos",
+        "ADD_CUSTOMER": "Agregar Cliente",
+        "SEARCH_PLACEHOLDER": "Buscar por nombre, teléfono o correo...",
+        "TABLE": {
+            "CUSTOMER": "Cliente",
+            "PHONE": "Teléfono",
+            "EMAIL": "Correo",
+            "TYPE": "Tipo",
+            "ACTIONS": "Acciones"
+        },
+        "TYPE": {
+            "CORPORATE": "Corporativo",
+            "INDIVIDUAL": "Individual",
+            "CORP": "Corp",
+            "INDIV": "Indiv"
+        },
+        "EMPTY": {
+            "TITLE": "No se encontraron clientes",
+            "SUBTITLE": "Intente ajustar su búsqueda o agregue un nuevo cliente"
+        },
+        "ID": "ID"
+    },
+    "SERVICES": {
+        "TITLE": "Catálogo de Servicios",
+        "SUBTITLE": "Administre sus ofertas de servicios",
+        "ADD_SERVICE": "Agregar Servicio",
+        "FILTERS": {
+            "ALL_SERVICES": "Todos los Servicios",
+            "ACTIVE_ONLY": "Solo Activos",
+            "INACTIVE_ONLY": "Solo Inactivos"
+        },
+        "NO_DESCRIPTION": "Sin descripción",
+        "STATUS": {
+            "ACTIVE": "Activo",
+            "INACTIVE": "Inactivo"
+        },
+        "DURATION": "{{minutes}} min",
+        "EMPTY": {
+            "TITLE": "No se encontraron servicios",
+            "SUBTITLE": "Agregue su primer servicio para comenzar"
+        }
+    },
+    "MARKETING": {
+        "TITLE": "Marketing",
+        "SUBTITLE": "Promociones y programas de fidelización",
+        "COUPONS": {
+            "TITLE": "Cupones y Descuentos",
+            "SUBTITLE": "Administre ofertas promocionales"
+        },
+        "LOYALTY": {
+            "TITLE": "Configuración de Fidelización",
+            "SUBTITLE": "Configure el programa de fidelización"
+        }
+    },
+    "NOTIFICATIONS": {
+        "SHOP_CREATED": "Shop created successfully",
+        "SHOP_UPDATED": "Shop updated successfully",
+        "SHOP_DELETED": "Shop deleted successfully",
+        "SHOP_ACTIVATED": "Shop activated successfully",
+        "SHOP_DEACTIVATED": "Shop deactivated successfully",
+        "OPERATION_FAILED": "Operation failed. Please try again.",
+        "OPERATION_SUCCESS": "Operation completed successfully"
+    },
+    "MODALS": {
+        "CONFIRM_DELETE_TITLE": "Confirm Deletion",
+        "CONFIRM_TOGGLE_TITLE": "Confirm Status Change",
+        "DELETE_WARNING": "This action cannot be undone."
+    }
+}

@@ -1,0 +1,248 @@
+{
+    "COMMON": {
+        "ADD": "Add",
+        "EDIT": "Edit",
+        "DELETE": "Delete",
+        "CANCEL": "Cancel",
+        "SAVE": "Save",
+        "UPDATE": "Update",
+        "ACTIVATE": "Activate",
+        "DEACTIVATE": "Deactivate",
+        "LOADING": "Loading...",
+        "CONFIRM": "Confirm",
+        "CONFIRM_DELETE": "Are you sure you want to delete {{name}}?",
+        "CONFIRM_ACTION": "Are you sure you want to {{action}} {{name}}?"
+    },
+    "NOTIFICATIONS": {
+        "SHOP_CREATED": "Shop created successfully",
+        "SHOP_UPDATED": "Shop updated successfully",
+        "SHOP_DELETED": "Shop deleted successfully",
+        "SHOP_ACTIVATED": "Shop activated successfully",
+        "SHOP_DEACTIVATED": "Shop deactivated successfully",
+        "OPERATION_FAILED": "Operation failed. Please try again.",
+        "OPERATION_SUCCESS": "Operation completed successfully"
+    },
+    "MODALS": {
+        "CONFIRM_DELETE_TITLE": "Confirm Deletion",
+        "CONFIRM_TOGGLE_TITLE": "Confirm Status Change",
+        "DELETE_WARNING": "This action cannot be undone."
+    },
+    "TOP_BAR": {
+        "SELECT_SHOP": "Select Shop",
+        "SHOP_PREFIX": "Shop: ",
+        "ADD_SHOP": "Add Shop",
+        "NO_SHOPS": "No shops available",
+        "PROFILE_SETTINGS": "Profile Settings",
+        "THIS_MONTH": "This Month",
+        "CUSTOM": "Custom Range"
+    },
+    "REFRESH": "Refresh",
+    "LAST_UPDATED": "Last updated:",
+    "KPIS": {
+        "TODAYS_REVENUE": "Today's Revenue",
+        "THIS_WEEKS_REVENUE": "This Week's Revenue",
+        "THIS_MONTHS_REVENUE": "This Month's Revenue",
+        "CUSTOM_REVENUE": "Revenue (Custom Range)",
+        "SERVICES_TODAY": "Services Today",
+        "SERVICES_THIS_WEEK": "Services This Week",
+        "SERVICES_THIS_MONTH": "Services This Month",
+        "SERVICES_CUSTOM": "Services (Custom Range)",
+        "CARS_IN_QUEUE": "Cars in Queue",
+        "NEW_CUSTOMERS_TODAY": "New Customers Today",
+        "NEW_CUSTOMERS_THIS_WEEK": "New Customers This Week",
+        "NEW_CUSTOMERS_THIS_MONTH": "New Customers This Month",
+        "NEW_CUSTOMERS_CUSTOM": "New Customers (Custom Range)",
+        "LOADING": "Loading...",
+        "CURRENT": "Current"
+    },
+    "CHARTS": {
+        "SERVICES_WEEK": "Services This Week",
+        "TOP_SERVICES": "Top Services"
+    },
+    "RECENT_SERVICES": {
+        "TITLE": "Recent Services",
+        "TABLE": {
+            "TIME": "Time",
+            "CUSTOMER": "Customer",
+            "CAR": "Car",
+            "SERVICE": "Service",
+            "STAFF": "Staff",
+            "STATUS": "Status"
+        },
+        "NO_DATA": "No recent services found"
+    }
+},
+"NAV": {
+    "DASHBOARD": "Dashboard",
+    "ACCOUNTING": "Accounting",
+    "STAFF": "Staff",
+    "CUSTOMERS": "Customers",
+    "SERVICES": "Services",
+    "MARKETING": "Marketing",
+    "SETTINGS": "Settings"
+},
+"ACCOUNTING": {
+    "TITLE": "Accounting & Reports",
+    "SUBTITLE": "Financial overview and transaction history",
+    "KPIS": {
+        "TODAYS_REVENUE": "Today's Revenue",
+        "THIS_WEEK": "This Week",
+        "THIS_MONTH": "This Month",
+        "AVG_TRANSACTION": "Avg Transaction",
+        "FROM_YESTERDAY": "from yesterday",
+        "FROM_LAST_WEEK": "from last week",
+        "FROM_LAST_MONTH": "from last month",
+        "BASED_ON": "Based on {{count}} services"
+    },
+    "REVENUE_TREND": "Revenue Trend",
+    "CHART_PLACEHOLDER": "Chart placeholder - integrate Chart.js",
+    "RECENT_TRANSACTIONS": {
+        "TITLE": "Recent Transactions",
+        "EXPORT_CSV": "Export CSV",
+        "TABLE": {
+            "DATE": "Date",
+            "CUSTOMER": "Customer",
+            "SERVICE": "Service",
+            "AMOUNT": "Amount",
+            "STATUS": "Status"
+        },
+        "PAID": "Paid"
+    }
+},
+"STAFF": {
+    "TITLE": "Staff Management",
+    "SUBTITLE": "Manage your team members and their roles",
+    "ADD_STAFF": "Add Staff",
+    "SEARCH_PLACEHOLDER": "Search by name, email, or phone...",
+    "FILTERS": {
+        "ALL_STAFF": "All Staff",
+        "ACTIVE_ONLY": "Active Only",
+        "INACTIVE_ONLY": "Inactive Only"
+    },
+    "TABLE": {
+        "STAFF_MEMBER": "Staff Member",
+        "ROLE": "Role",
+        "PHONE": "Phone",
+        "EMAIL": "Email",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+    },
+    "STATUS": {
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+    },
+    "ACTIONS": {
+        "ACTIVATE": "Activate",
+        "DEACTIVATE": "Deactivate",
+        "VIEW_DETAILS": "View Details"
+    },
+    "EMPTY": {
+        "TITLE": "No staff members found",
+        "SUBTITLE": "Try adjusting your search or add a new staff member"
+    },
+    "ID": "ID"
+},
+"CUSTOMERS": {
+    "TITLE": "Customer Management",
+    "SUBTITLE": "Manage your customers and their vehicles",
+    "ADD_CUSTOMER": "Add Customer",
+    "SEARCH_PLACEHOLDER": "Search by name, phone, or email...",
+    "TABLE": {
+        "CUSTOMER": "Customer",
+        "PHONE": "Phone",
+        "EMAIL": "Email",
+        "TYPE": "Type",
+        "ACTIONS": "Actions"
+    },
+    "TYPE": {
+        "CORPORATE": "Corporate",
+        "INDIVIDUAL": "Individual",
+        "CORP": "Corp",
+        "INDIV": "Indiv"
+    },
+    "EMPTY": {
+        "TITLE": "No customers found",
+        "SUBTITLE": "Try adjusting your search or add a new customer"
+    },
+    "ID": "ID"
+},
+"SERVICES": {
+    "TITLE": "Service Catalog",
+    "SUBTITLE": "Manage your service offerings",
+    "ADD_SERVICE": "Add Service",
+    "FILTERS": {
+        "ALL_SERVICES": "All Services",
+        "ACTIVE_ONLY": "Active Only",
+        "INACTIVE_ONLY": "Inactive Only"
+    },
+    "NO_DESCRIPTION": "No description",
+    "STATUS": {
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+    },
+    "DURATION": "{{minutes}} min",
+    "EMPTY": {
+        "TITLE": "No services found",
+        "SUBTITLE": "Add your first service to get started"
+    }
+},
+"MARKETING": {
+    "TITLE": "Marketing",
+    "SUBTITLE": "Promotions and loyalty programs",
+    "COUPONS": {
+        "TITLE": "Coupons & Discounts",
+        "SUBTITLE": "Manage promotional offers"
+    },
+    "LOYALTY": {
+        "TITLE": "Loyalty Settings",
+        "SUBTITLE": "Configure loyalty program"
+    }
+},
+"SETTINGS": {
+    "TITLE": "Settings",
+    "SUBTITLE": "Configure your system preferences",
+    "SHOPS": {
+        "TITLE": "Shops & Locations",
+        "SUBTITLE": "Manage your business locations",
+        "ADD_NEW": "Add New Shop",
+        "EDIT_SHOP": "Edit Shop",
+        "CREATE_TITLE": "Add New Store",
+        "CREATE_SUBTITLE": "Register a new shop location for your business",
+        "EDIT_TITLE": "Edit Shop",
+        "EDIT_SUBTITLE": "Update shop location details",
+        "FORM": {
+            "NAME": "Shop Name",
+            "ADDRESS": "Address",
+            "PHONE": "Phone Number",
+            "EMAIL": "Email",
+            "PLACEHOLDERS": {
+                "NAME": "Enter shop name",
+                "ADDRESS": "Enter shop address",
+                "PHONE": "Enter phone number",
+                "EMAIL": "Enter email address"
+            }
+        },
+        "STATUS": {
+            "ACTIVE": "Active",
+            "INACTIVE": "Inactive"
+        },
+        "EMPTY": {
+            "TITLE": "No shops configured",
+            "SUBTITLE": "Add your first shop location"
+        },
+        "CONFIRM_ACTIVATE": "Are you sure you want to activate {{name}}?",
+        "CONFIRM_DEACTIVATE": "Are you sure you want to deactivate {{name}}?",
+        "CONFIRM_DELETE": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+        "ERROR_STATUS": "Failed to update shop status. Please try again.",
+        "ERROR_DELETE": "Failed to delete shop. Please try again."
+    },
+    "LOCALIZATION": {
+        "TITLE": "Localization",
+        "SUBTITLE": "Language and regional settings"
+    },
+    "NOTIFICATIONS": {
+        "TITLE": "Notifications",
+        "SUBTITLE": "SMS and email preferences"
+    }
+}
+}
