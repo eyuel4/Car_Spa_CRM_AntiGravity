@@ -1,0 +1,138 @@
+<div class="p-6 min-w-[500px] max-w-[600px]">
+    <!-- Header -->
+    <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+            </svg>
+        </div>
+        <h2 class="text-xl font-semibold text-gray-900">Adjust Loyalty Points</h2>
+    </div>
+
+    <!-- Customer Info -->
+    <div class="bg-gray-50 rounded-lg p-4 mb-6">
+        <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-gray-600">Customer:</span>
+            <span class="text-sm text-gray-900">{{data.customerName}}</span>
+        </div>
+        <div class="flex justify-between items-center">
+            <span class="text-sm font-medium text-gray-600">Current Points:</span>
+            <span class="text-sm font-semibold text-primary-600">{{data.currentPoints}}</span>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="adjustmentForm" class="space-y-4">
+        <!-- Transaction Type -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Transaction Type</label>
+            <div class="relative">
+                <select formControlName="transaction_type" 
+                    class="input-field appearance-none pr-10"
+                    [class.border-red-500]="adjustmentForm.get('transaction_type')?.invalid && adjustmentForm.get('transaction_type')?.touched">
+                    <option *ngFor="let type of transactionTypes" [value]="type.value">
+                        {{type.label}}
+                    </option>
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Points -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Points</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                </div>
+                <input type="number" formControlName="points" 
+                    class="input-field pl-10"
+                    [class.border-red-500]="adjustmentForm.get('points')?.invalid && adjustmentForm.get('points')?.touched"
+                    placeholder="Enter positive or negative number">
+            </div>
+            <p class="mt-1 text-xs text-gray-500">Use negative numbers to deduct points</p>
+            <p *ngIf="adjustmentForm.get('points')?.hasError('required') && adjustmentForm.get('points')?.touched" 
+                class="mt-1 text-sm text-red-600">
+                Points are required
+            </p>
+            <p *ngIf="adjustmentForm.get('points')?.hasError('pattern') && adjustmentForm.get('points')?.touched" 
+                class="mt-1 text-sm text-red-600">
+                Must be a valid number
+            </p>
+        </div>
+
+        <!-- Balance Preview -->
+        <div class="flex justify-between items-center p-4 rounded-lg border-l-4"
+            [class.bg-green-50]="!isNegativeBalance"
+            [class.border-green-500]="!isNegativeBalance"
+            [class.bg-red-50]="isNegativeBalance"
+            [class.border-red-500]="isNegativeBalance">
+            <span class="text-sm font-medium text-gray-600">New Balance:</span>
+            <span class="text-base font-semibold"
+                [class.text-green-600]="!isNegativeBalance"
+                [class.text-red-600]="isNegativeBalance">
+                {{newBalance}} points
+            </span>
+        </div>
+
+        <!-- Reason -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Reason</label>
+            <div class="relative">
+                <div class="absolute top-3 left-3 pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <textarea formControlName="reason" rows="3"
+                    class="input-field pl-10 resize-none"
+                    [class.border-red-500]="adjustmentForm.get('reason')?.invalid && adjustmentForm.get('reason')?.touched"
+                    placeholder="Explain the reason for this adjustment..."></textarea>
+            </div>
+            <p *ngIf="adjustmentForm.get('reason')?.hasError('required') && adjustmentForm.get('reason')?.touched" 
+                class="mt-1 text-sm text-red-600">
+                Reason is required
+            </p>
+        </div>
+    </form>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="mt-4 flex items-center gap-3 p-3 bg-red-50 border-l-4 border-red-500 rounded">
+        <svg class="w-5 h-5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="text-sm text-red-800">{{errorMessage}}</span>
+    </div>
+
+    <!-- Warning Message -->
+    <div *ngIf="isNegativeBalance" class="mt-4 flex items-center gap-3 p-3 bg-yellow-50 border-l-4 border-yellow-500 rounded">
+        <svg class="w-5 h-5 text-yellow-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+        </svg>
+        <span class="text-sm text-yellow-800">This adjustment would result in a negative balance</span>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
+        <button type="button" (click)="onCancel()" [disabled]="isSubmitting" 
+            class="btn btn-secondary">
+            Cancel
+        </button>
+        <button type="button" (click)="onSubmit()" 
+            [disabled]="isSubmitting || isNegativeBalance"
+            class="btn btn-primary flex items-center gap-2">
+            <svg *ngIf="isSubmitting" class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span *ngIf="!isSubmitting">Apply Adjustment</span>
+            <span *ngIf="isSubmitting">Applying...</span>
+        </button>
+    </div>
+</div>

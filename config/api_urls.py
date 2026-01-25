@@ -13,12 +13,15 @@ from billing.views import (
 from loyalty.views import CustomerLoyaltyViewSet, RedemptionOptionViewSet, LoyaltyTierViewSet
 from notifications.views import NotificationViewSet, NotificationChannelViewSet, SystemNotificationViewSet, RoleNotificationPreferenceViewSet
 from tenants.views import ShopViewSet, TenantViewSet
+from car_references.views import CarMakeViewSet, CarModelViewSet
 from core.views import DashboardStatsView
 
 # Create router and register viewsets
 router = DefaultRouter()
 router.register(r'customers', CustomerViewSet, basename='customer')
 router.register(r'cars', CarViewSet, basename='car')
+router.register(r'car-makes', CarMakeViewSet, basename='car-make')
+router.register(r'car-models', CarModelViewSet, basename='car-model')
 router.register(r'staff', StaffViewSet, basename='staff')
 router.register(r'services', ServiceViewSet, basename='service')
 router.register(r'categories', CategoryViewSet, basename='category')

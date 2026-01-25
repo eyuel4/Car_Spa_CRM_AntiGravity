@@ -1,0 +1,148 @@
+<div class="space-y-6">
+    <!-- Search Header -->
+    <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+        </div>
+        <h2 class="text-xl font-semibold text-gray-900">Customer Search</h2>
+    </div>
+
+    <!-- Search Type Selector -->
+    <div class="flex flex-wrap gap-2">
+        <button *ngFor="let type of searchTypes" 
+            (click)="onSearchTypeChange(type.value)"
+            type="button"
+            class="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors"
+            [class.bg-primary-600]="searchType === type.value"
+            [class.text-white]="searchType === type.value"
+            [class.bg-gray-200]="searchType !== type.value"
+            [class.text-gray-700]="searchType !== type.value"
+            [class.hover:bg-gray-300]="searchType !== type.value">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="getIconPath(type.icon)"></path>
+            </svg>
+            {{type.label}}
+        </button>
+    </div>
+
+    <!-- Search Input -->
+    <div class="space-y-2">
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+            <input [formControl]="searchControl" 
+                type="text"
+                placeholder="Enter search query..." 
+                autocomplete="off"
+                class="input-field pl-10 pr-10">
+            <button *ngIf="searchControl.value" 
+                (click)="clearSearch()"
+                type="button"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <p class="text-xs text-gray-500">Search by {{searchTypes.find(t => t.value === searchType)?.label.toLowerCase()}}</p>
+        
+        <!-- Loading Indicator -->
+        <div *ngIf="isSearching" class="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+            <div class="h-full bg-primary-600 rounded-full animate-pulse" style="width: 30%; animation: indeterminate 1.5s infinite;"></div>
+        </div>
+    </div>
+
+    <!-- Search Results -->
+    <div *ngIf="showResults" class="space-y-4">
+        <div class="text-sm text-gray-600">
+            {{searchResults.length}} result(s) found
+        </div>
+
+        <div *ngIf="searchResults.length > 0" class="space-y-3">
+            <div *ngFor="let customer of searchResults" 
+                (click)="selectCustomer(customer)"
+                class="card cursor-pointer hover:shadow-lg transition-shadow">
+                <div class="flex items-center gap-4">
+                    <!-- Customer Icon & Type -->
+                    <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0"
+                        [class.bg-blue-100]="customer.customer_type === 'CORPORATE'">
+                        <svg class="w-6 h-6 text-primary-600" 
+                            [class.text-blue-600]="customer.customer_type === 'CORPORATE'"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="getCustomerIconPath(customer.customer_type)"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Customer Info -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-lg font-semibold text-gray-900 truncate">{{customer.full_name}}</h3>
+                            <span class="px-2 py-1 text-xs font-medium rounded-full"
+                                [class.bg-blue-100]="customer.customer_type === 'CORPORATE'"
+                                [class.text-blue-800]="customer.customer_type === 'CORPORATE'"
+                                [class.bg-gray-100]="customer.customer_type !== 'CORPORATE'"
+                                [class.text-gray-800]="customer.customer_type !== 'CORPORATE'">
+                                {{customer.customer_type}}
+                            </span>
+                        </div>
+                        <div class="flex flex-wrap gap-4 text-sm text-gray-600">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                </svg>
+                                {{customer.phone_number}}
+                            </span>
+                            <span *ngIf="customer.email" class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                {{customer.email}}
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                                </svg>
+                                {{customer.car_count}} car(s)
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Loyalty Info -->
+                    <div class="flex flex-col items-end gap-2 flex-shrink-0">
+                        <div class="flex items-center gap-1 text-primary-600 font-medium">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                            </svg>
+                            {{customer.loyalty_points}} pts
+                        </div>
+                        <span *ngIf="customer.current_tier_name" 
+                            class="px-2 py-1 text-xs font-medium rounded-full"
+                            [ngClass]="getTierBadgeClass(customer.current_tier_name)">
+                            {{customer.current_tier_name}}
+                        </span>
+                    </div>
+
+                    <!-- Action Icon -->
+                    <div class="text-gray-400 flex-shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="searchResults.length === 0" class="text-center py-12">
+            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <p class="text-gray-600 font-medium mb-2">No customers found</p>
+            <p class="text-sm text-gray-500">Try adjusting your search query or search type</p>
+        </div>
+    </div>
+</div>

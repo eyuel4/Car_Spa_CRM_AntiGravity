@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'billing',
     'loyalty',
     'notifications',
+    'car_references',
 ]
 
 MIDDLEWARE = [

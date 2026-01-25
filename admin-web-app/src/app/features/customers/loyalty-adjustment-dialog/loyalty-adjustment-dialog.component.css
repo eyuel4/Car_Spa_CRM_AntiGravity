@@ -1,0 +1,7 @@
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .min-w-\[500px\] {
+        min-width: auto;
+        width: 100%;
+    }
+}

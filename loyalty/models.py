@@ -34,7 +34,7 @@ class LoyaltyTier(TenantAwareModel):
 
 class CustomerLoyalty(TenantAwareModel):
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE, related_name='loyalty')
-    current_tier = models.ForeignKey(LoyaltyTier, on_delete=models.SET_NULL, null=True, blank=True, related_name='customers')
+    current_tier = models.ForeignKey(LoyaltyTier, on_delete=models.SET_NULL, null=True, blank=True, related_name='legacy_customers')
     total_points = models.IntegerField(default=0, help_text="Lifetime points earned")
     available_points = models.IntegerField(default=0, help_text="Points available for redemption")
     tier_achieved_date = models.DateField(blank=True, null=True)
@@ -58,6 +58,35 @@ class PointTransaction(TenantAwareModel):
 
     def __str__(self):
         return f"{self.transaction_type}: {self.points} pts"
+
+
+class LoyaltyTransaction(TenantAwareModel):
+    """
+    Manual loyalty point adjustments by admins/owners.
+    Separate from automatic point transactions.
+    """
+    TRANSACTION_TYPE_CHOICES = (
+        ('EARNED', 'Earned'),
+        ('ADJUSTMENT', 'Manual Adjustment'),
+        ('REDEEMED', 'Redeemed'),
+        ('BONUS', 'Bonus'),
+        ('PENALTY', 'Penalty'),
+    )
+    
+    customer = models.ForeignKey('customers.Customer', on_delete=models.CASCADE, related_name='loyalty_adjustments')
+    points = models.IntegerField(help_text="Can be positive or negative")
+    reason = models.TextField()
+    transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPE_CHOICES, default='ADJUSTMENT')
+    adjusted_by = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True, blank=True, help_text="Admin who made the adjustment")
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Loyalty Transaction'
+        verbose_name_plural = 'Loyalty Transactions'
+    
+    def __str__(self):
+        return f"{self.customer} - {self.transaction_type}: {self.points} pts"
+
 
 class RedemptionOption(TenantAwareModel):
     REDEMPTION_TYPE_CHOICES = (
