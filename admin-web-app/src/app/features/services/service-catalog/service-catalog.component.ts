@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ServiceService } from '../../../core/services/service.service';
 import { Service } from '../../../core/models/business.model';
+import { ConfirmationModalComponent } from '../../../shared/components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-service-catalog',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule, ConfirmationModalComponent],
   template: `
     <div class="space-y-6">
       <!-- Page Header -->
@@ -17,7 +19,7 @@ import { Service } from '../../../core/models/business.model';
           <h1 class="text-2xl font-bold text-gray-900">{{ 'SERVICES.TITLE' | translate }}</h1>
           <p class="text-gray-600 mt-1">{{ 'SERVICES.SUBTITLE' | translate }}</p>
         </div>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="navigateToAdd()">
           <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
           </svg>
@@ -56,15 +58,23 @@ import { Service } from '../../../core/models/business.model';
                 <p class="text-xs text-gray-500" *ngIf="service.duration_minutes">{{ 'SERVICES.DURATION' | translate: {minutes: service.duration_minutes} }}</p>
               </div>
               <div class="flex gap-2">
-                <button class="text-primary-600 hover:text-primary-800">
+                <!-- Edit -->
+                <button (click)="navigateToEdit(service.id)" class="text-primary-600 hover:text-primary-800" title="{{ 'COMMON.EDIT' | translate }}">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                   </svg>
                 </button>
-                <button (click)="toggleActive(service)" [class.text-green-600]="!service.is_active" [class.text-red-600]="service.is_active">
+                <!-- Toggle Active -->
+                <button (click)="toggleActive(service)" [class.text-green-600]="!service.is_active" [class.text-red-600]="service.is_active" title="{{ service.is_active ? ('COMMON.DEACTIVATE' | translate) : ('COMMON.ACTIVATE' | translate) }}">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
                   </svg>
+                </button>
+                <!-- Delete -->
+                <button (click)="openDeleteModal(service)" class="text-red-600 hover:text-red-800" title="{{ 'COMMON.DELETE' | translate }}">
+                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                   </svg>
                 </button>
               </div>
             </div>
@@ -80,9 +90,24 @@ import { Service } from '../../../core/models/business.model';
           </svg>
           <h3 class="text-lg font-medium text-gray-900 mb-2">{{ 'SERVICES.EMPTY.TITLE' | translate }}</h3>
           <p class="text-gray-600">{{ 'SERVICES.EMPTY.SUBTITLE' | translate }}</p>
+          <button class="btn btn-primary mt-4" (click)="navigateToAdd()">
+            {{ 'SERVICES.ADD_SERVICE' | translate }}
+          </button>
         </div>
       </div>
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <app-confirmation-modal
+      [isOpen]="deleteModalOpen"
+      [title]="'SERVICES.DELETE_TITLE' | translate"
+      [message]="'SERVICES.DELETE_CONFIRMATION' | translate: {name: serviceToDelete?.name}"
+      [confirmText]="'COMMON.DELETE' | translate"
+      [icon]="'danger'"
+      [confirmClass]="'btn-danger'"
+      (confirmed)="confirmDelete()"
+      (cancelled)="closeDeleteModal()"
+    ></app-confirmation-modal>
   `,
   styles: []
 })
@@ -91,7 +116,13 @@ export class ServiceCatalogComponent implements OnInit {
   filteredServices: Service[] = [];
   filterStatus = 'all';
 
-  constructor(private serviceService: ServiceService) { }
+  deleteModalOpen = false;
+  serviceToDelete: Service | null = null;
+
+  constructor(
+    private serviceService: ServiceService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadServices();
@@ -129,5 +160,40 @@ export class ServiceCatalogComponent implements OnInit {
         console.error('Error toggling service status:', error);
       }
     });
+  }
+
+  navigateToAdd(): void {
+    this.router.navigate(['/services/new']);
+  }
+
+  navigateToEdit(id: number): void {
+    this.router.navigate(['/services', id]);
+  }
+
+  openDeleteModal(service: Service): void {
+    this.serviceToDelete = service;
+    this.deleteModalOpen = true;
+  }
+
+  closeDeleteModal(): void {
+    this.deleteModalOpen = false;
+    this.serviceToDelete = null;
+  }
+
+  confirmDelete(): void {
+    if (this.serviceToDelete) {
+      this.serviceService.delete(this.serviceToDelete.id).subscribe({
+        next: () => {
+          this.services = this.services.filter(s => s.id !== this.serviceToDelete!.id);
+          this.applyFilter();
+          this.closeDeleteModal();
+        },
+        error: (err) => {
+          console.error('Error deleting service', err);
+          // Handle error (maybe show notification)
+          this.closeDeleteModal();
+        }
+      });
+    }
   }
 }

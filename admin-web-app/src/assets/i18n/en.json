@@ -11,7 +11,8 @@
         "LOADING": "Loading...",
         "CONFIRM_DELETE": "Are you sure you want to delete {{name}}?",
         "CONFIRM_ACTION": "Are you sure you want to {{action}} {{name}}?",
-        "CONFIRM": "Confirm"
+        "CONFIRM": "Confirm",
+        "REQUIRED_FIELD": "This field is required"
     },
     "TOP_BAR": {
         "SELECT_SHOP": "Select Shop",
@@ -26,43 +27,6 @@
             "STAFF": "Staff"
         },
         "LANGUAGE": "Language"
-    },
-    "SETTINGS": {
-        "SHOPS": {
-            "TITLE": "Shops & Locations",
-            "SUBTITLE": "Manage your business locations",
-            "ADD_NEW": "Add New Shop",
-            "EDIT_SHOP": "Edit Shop",
-            "CREATE_TITLE": "Add New Store",
-            "CREATE_SUBTITLE": "Register a new shop location for your business",
-            "EDIT_TITLE": "Edit Shop",
-            "EDIT_SUBTITLE": "Update shop location details",
-            "FORM": {
-                "NAME": "Shop Name",
-                "ADDRESS": "Address",
-                "PHONE": "Phone Number",
-                "EMAIL": "Email",
-                "PLACEHOLDERS": {
-                    "NAME": "Enter shop name",
-                    "ADDRESS": "Enter shop address",
-                    "PHONE": "Enter phone number",
-                    "EMAIL": "Enter email address"
-                }
-            },
-            "STATUS": {
-                "ACTIVE": "Active",
-                "INACTIVE": "Inactive"
-            },
-            "EMPTY": {
-                "TITLE": "No shops configured",
-                "SUBTITLE": "Add your first shop location"
-            },
-            "CONFIRM_ACTIVATE": "Are you sure you want to activate {{name}}?",
-            "CONFIRM_DEACTIVATE": "Are you sure you want to deactivate {{name}}?",
-            "CONFIRM_DELETE": "Are you sure you want to delete {{name}}? This action cannot be undone.",
-            "ERROR_STATUS": "Failed to update shop status. Please try again.",
-            "ERROR_DELETE": "Failed to delete shop. Please try again."
-        }
     },
     "DASHBOARD": {
         "TITLE": "Dashboard",
@@ -144,7 +108,8 @@
                 "STATUS": "Status"
             },
             "PAID": "Paid"
-        }
+        },
+        "TRANSACTION_DETAIL": "Transaction Detail"
     },
     "STAFF": {
         "TITLE": "Staff Management",
@@ -221,6 +186,23 @@
         "EMPTY": {
             "TITLE": "No services found",
             "SUBTITLE": "Add your first service to get started"
+        },
+        "EDIT_SERVICE": "Edit Service",
+        "EDIT_SUBTITLE": "Update service details",
+        "CREATE_SUBTITLE": "Add a new service offering",
+        "DELETE_TITLE": "Delete Service",
+        "DELETE_CONFIRMATION": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+        "FORM": {
+            "NAME": "Service Name",
+            "CATEGORY": "Category",
+            "PRICE": "Price",
+            "DURATION": "Duration",
+            "DESCRIPTION": "Description",
+            "PLACEHOLDERS": {
+                "NAME": "Enter service name",
+                "CATEGORY": "Select a category",
+                "DESCRIPTION": "Enter service description"
+            }
         }
     },
     "MARKETING": {

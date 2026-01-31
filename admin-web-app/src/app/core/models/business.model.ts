@@ -22,6 +22,12 @@ export interface Car {
     car_type?: number;
 }
 
+export interface Category {
+    id: number;
+    name: string;
+    description?: string;
+}
+
 export interface Service {
     id: number;
     name: string;
@@ -29,7 +35,10 @@ export interface Service {
     price: string;
     duration_minutes?: number;
     category?: number;
+    category_data?: Category; // For expanding category details
     is_active: boolean;
+    image?: string;
+    image_url?: string;
 }
 
 export interface ServiceRecord {

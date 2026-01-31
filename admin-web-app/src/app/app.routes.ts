@@ -23,6 +23,10 @@ export const routes: Routes = [
                 loadChildren: () => import('./features/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES)
             },
             {
+                path: 'operations',
+                loadChildren: () => import('./features/operations/operations.routes').then(m => m.OPERATIONS_ROUTES)
+            },
+            {
                 path: 'accounting',
                 loadChildren: () => import('./features/accounting/accounting.routes').then(m => m.ACCOUNTING_ROUTES)
             },

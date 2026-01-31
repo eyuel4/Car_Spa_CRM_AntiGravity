@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Service } from '../models/business.model';
+import { Service, Category } from '../models/business.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -33,5 +33,20 @@ export class ServiceService {
 
   toggleActive(id: number, isActive: boolean): Observable<Service> {
     return this.http.patch<Service>(`${this.apiUrl}/${id}/`, { is_active: isActive });
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}/`);
+  }
+
+  // Categories
+  getCategories(): Observable<Category[]> {
+    return this.http.get<{ results: Category[] }>(`${environment.apiUrl}/categories/`).pipe(
+      map(response => response.results || [])
+    );
+  }
+
+  createCategory(category: Partial<Category>): Observable<Category> {
+    return this.http.post<Category>(`${environment.apiUrl}/categories/`, category);
   }
 }

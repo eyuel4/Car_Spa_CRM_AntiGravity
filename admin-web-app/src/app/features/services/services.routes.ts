@@ -4,5 +4,13 @@ export const SERVICES_ROUTES: Routes = [
     {
         path: '',
         loadComponent: () => import('./service-catalog/service-catalog.component').then(m => m.ServiceCatalogComponent)
+    },
+    {
+        path: 'new',
+        loadComponent: () => import('./service-form/service-form.component').then(m => m.ServiceFormComponent)
+    },
+    {
+        path: ':id',
+        loadComponent: () => import('./service-form/service-form.component').then(m => m.ServiceFormComponent)
     }
 ];
