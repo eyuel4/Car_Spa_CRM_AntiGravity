@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CustomerService } from '../../../core/services/customer.service';
 import { CustomerDataService } from '../../../core/services/customer-data.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { OperationsService } from '../../../core/services/operations.service';
 import { Customer, Car } from '../../../core/models/business.model';
 import { LoyaltyAdjustmentDialogComponent } from '../loyalty-adjustment-dialog/loyalty-adjustment-dialog.component';
 
@@ -24,10 +25,19 @@ export class CustomerDetailComponent implements OnInit {
   currentTier = '';
   visitCount = 0;
 
+  jobs: any[] = [];
+  customerStats = {
+    totalSpent: 0,
+    visitCount: 0,
+    avgTicket: 0,
+    topService: '-'
+  };
+
   tabs = [
     { id: 'profile', label: 'Profile' },
     { id: 'cars', label: 'Vehicles' },
     { id: 'history', label: 'Service History' },
+    { id: 'analytics', label: 'Analytics' },
     { id: 'loyalty', label: 'Loyalty' }
   ];
 
@@ -36,6 +46,7 @@ export class CustomerDetailComponent implements OnInit {
     private router: Router,
     private customerService: CustomerService,
     private customerDataService: CustomerDataService,
+    private operationsService: OperationsService, // Injected
     private authService: AuthService,
     private dialog: MatDialog
   ) { }
@@ -43,11 +54,59 @@ export class CustomerDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id && id !== 'new') {
-      this.loadCustomer(parseInt(id));
-      this.loadCars(parseInt(id));
-      this.loadLoyaltyInfo(parseInt(id));
+      const customerId = parseInt(id);
+      this.loadCustomer(customerId);
+      this.loadCars(customerId);
+      this.loadLoyaltyInfo(customerId);
+      this.loadServiceHistory(customerId); // New call
     }
   }
+
+  // ... existing loadCustomer, loadCars, loadLoyaltyInfo ...
+
+  loadServiceHistory(customerId: number): void {
+    this.operationsService.getJobs({ customer: customerId }).subscribe({
+      next: (jobs) => {
+        this.jobs = jobs;
+        this.calculateStats(jobs);
+      },
+      error: (err) => console.error('Error loading history', err)
+    });
+  }
+
+  calculateStats(jobs: any[]): void {
+    const completedJobs = jobs.filter(j => j.status === 'COMPLETED' || j.status === 'PAID'); // Assuming statuses
+    const totalSpent = completedJobs.reduce((sum, job) => sum + (parseFloat(job.total_price) || 0), 0);
+    const visitCount = completedJobs.length;
+
+    // Simple top service logic
+    const serviceMap = new Map<string, number>();
+    completedJobs.forEach(job => {
+      job.items?.forEach((item: any) => {
+        const name = item.service?.name || item.service_name || 'Unknown';
+        serviceMap.set(name, (serviceMap.get(name) || 0) + 1);
+      });
+    });
+
+    let topService = '-';
+    let maxCount = 0;
+    serviceMap.forEach((count, name) => {
+      if (count > maxCount) {
+        maxCount = count;
+        topService = name;
+      }
+    });
+
+    this.customerStats = {
+      totalSpent,
+      visitCount,
+      avgTicket: visitCount ? totalSpent / visitCount : 0,
+      topService
+    };
+  }
+
+  // ... rest of methods
+
 
   loadCustomer(id: number): void {
     this.isLoading = true;

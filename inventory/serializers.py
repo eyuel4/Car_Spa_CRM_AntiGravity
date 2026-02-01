@@ -1,14 +1,23 @@
 from rest_framework import serializers
-from inventory.models import Product, StockLog, ServiceProductRequirement
+from inventory.models import Product, StockLog, ServiceProductRequirement, Supplier
+
+
+class SupplierSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Supplier
+        fields = ['id', 'name', 'contact_name', 'email', 'phone', 'address', 'is_active', 'created_at']
+        read_only_fields = ['id', 'created_at']
 
 
 class ProductSerializer(serializers.ModelSerializer):
     stock_status = serializers.SerializerMethodField()
+    supplier_name = serializers.CharField(source='supplier.name', read_only=True)
     
     class Meta:
         model = Product
         fields = [
-            'id', 'name', 'unit', 'current_stock', 'reorder_level',
+            'id', 'name', 'sku', 'description', 'category', 'unit', 
+            'current_stock', 'reorder_level', 'price', 'supplier', 'supplier_name',
             'stock_status', 'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']

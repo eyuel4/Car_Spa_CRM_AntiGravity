@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StaffService } from '../../../core/services/staff.service';
 import { TenantService } from '../../../core/services/tenant.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { OperationsService } from '../../../core/services/operations.service';
 import { Staff, EmergencyContact, SexType } from '../../../core/models/business.model';
 import { Shop } from '../../../core/models/user.model';
 import { ConfirmationModalComponent } from '../../../shared/components/confirmation-modal/confirmation-modal.component';
@@ -70,9 +71,59 @@ export class StaffDetailComponent implements OnInit {
     private staffService: StaffService,
     private tenantService: TenantService,
     private authService: AuthService,
+    private operationsService: OperationsService,
     private snackBar: MatSnackBar
   ) {
     this.initializeForm();
+  }
+
+  // ... (existing code)
+
+  loadPerformanceData(staffId: number): void {
+    // Fetch all completed tasks for this staff member
+    this.operationsService.getAllTasks({
+      staff: staffId,
+      status: 'DONE',
+      // Optional: Filter by year/month if backend supports date filtering on tasks. 
+      // For MVP, we'll fetch all and filter in frontend or just show all-time stats + specific year filter if needed.
+    }).subscribe({
+      next: (tasks) => {
+        this.calculatePerformanceMetrics(tasks);
+      },
+      error: (err) => {
+        console.error('Error loading performance data:', err);
+      }
+    });
+  }
+
+  calculatePerformanceMetrics(tasks: any[]): void {
+    // Filter by selected year if needed
+    const filteredTasks = tasks.filter(t => {
+      const date = new Date(t.end_time || t.created_at);
+      return date.getFullYear() === this.performanceYear;
+    });
+
+    const tasksCompleted = filteredTasks.length;
+
+    // Sum duration (assuming duration_hours is returned by serializer)
+    const totalHours = filteredTasks.reduce((sum, t) => sum + (parseFloat(t.duration_hours) || 0), 0);
+
+    const avgDuration = tasksCompleted ? totalHours / tasksCompleted : 0;
+
+    // Group by Month for chart (Mocking chart data for now or simple table)
+    const tasksByMonth = new Array(12).fill(0);
+    filteredTasks.forEach(t => {
+      const month = new Date(t.end_time || t.created_at).getMonth();
+      tasksByMonth[month]++;
+    });
+
+    this.performanceData = {
+      tasksCompleted,
+      totalHours: totalHours.toFixed(1),
+      avgDuration: avgDuration.toFixed(1),
+      tasksByMonth,
+      recentTasks: filteredTasks.sort((a, b) => new Date(b.end_time).getTime() - new Date(a.end_time).getTime()).slice(0, 5)
+    };
   }
 
   ngOnInit(): void {
@@ -90,7 +141,7 @@ export class StaffDetailComponent implements OnInit {
 
   initializeForm(): void {
     this.emergencyContactsFormArray = this.fb.array([]);
-    
+
     this.staffForm = this.fb.group({
       // Personal Information
       first_name: ['', Validators.required],
@@ -103,14 +154,14 @@ export class StaffDetailComponent implements OnInit {
       house_number: [''],
       state: [''],
       country: [''],
-      
+
       // Management Section
       title: ['', Validators.required],
       hire_date: ['', Validators.required],
       salary: [''],
       shop_id: [''],
       is_manager: [false],
-      
+
       // Emergency Contacts
       emergency_contacts: this.emergencyContactsFormArray
     });
@@ -218,7 +269,7 @@ export class StaffDetailComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      
+
       // Validate file type
       if (!file.type.startsWith('image/')) {
         this.showError('Please select an image file');
@@ -232,7 +283,7 @@ export class StaffDetailComponent implements OnInit {
       }
 
       this.selectedPhoto = file;
-      
+
       // Create preview
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -400,16 +451,7 @@ export class StaffDetailComponent implements OnInit {
     });
   }
 
-  loadPerformanceData(staffId: number): void {
-    this.staffService.getMonthlyPerformance(staffId, this.performanceYear).subscribe({
-      next: (data) => {
-        this.performanceData = data;
-      },
-      error: (err) => {
-        console.error('Error loading performance data:', err);
-      }
-    });
-  }
+
 
   onPerformanceYearChange(): void {
     if (this.staff?.id) {

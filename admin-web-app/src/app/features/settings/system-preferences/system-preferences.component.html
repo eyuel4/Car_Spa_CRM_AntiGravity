@@ -1,0 +1,72 @@
+<div class="max-w-4xl mx-auto space-y-6">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-900">System Preferences</h1>
+        <p class="text-gray-600">Configure global settings for your organization.</p>
+    </div>
+
+    <!-- Localization -->
+    <div class="card bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Localization</h3>
+            <p class="mt-1 text-sm text-gray-500">Currency, Timezone, and Date Formats.</p>
+        </div>
+        <div class="px-4 py-5 sm:p-6">
+            <form [formGroup]="prefForm" (ngSubmit)="onSubmit()" class="space-y-6">
+                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                    <div class="sm:col-span-3">
+                        <label class="block text-sm font-medium text-gray-700">Default Currency</label>
+                        <select formControlName="currency" class="input-field mt-1">
+                            <option *ngFor="let c of currencies" [value]="c.code">{{ c.name }} ({{ c.symbol }})</option>
+                        </select>
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label class="block text-sm font-medium text-gray-700">Timezone</label>
+                        <select formControlName="timezone" class="input-field mt-1">
+                            <option *ngFor="let tz of timezones" [value]="tz">{{ tz }}</option>
+                        </select>
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label class="block text-sm font-medium text-gray-700">Date Format</label>
+                        <select formControlName="dateFormat" class="input-field mt-1">
+                            <option value="mediumDate">Oct 28, 2025</option>
+                            <option value="shortDate">10/28/25</option>
+                            <option value="fullDate">Tuesday, October 28, 2025</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="hidden sm:block" aria-hidden="true">
+                    <div class="py-5">
+                        <div class="border-t border-gray-200"></div>
+                    </div>
+                </div>
+
+                <!-- Financial Configuration -->
+                <div>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Financials & Tax</h3>
+                    <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                        <div class="sm:col-span-3">
+                            <label class="block text-sm font-medium text-gray-700">Tax Name</label>
+                            <input type="text" formControlName="taxName" class="input-field mt-1"
+                                placeholder="e.g. VAT">
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label class="block text-sm font-medium text-gray-700">Tax Rate (Decimal)</label>
+                            <input type="number" step="0.01" formControlName="taxRate" class="input-field mt-1"
+                                placeholder="0.15">
+                            <p class="mt-1 text-xs text-gray-500">e.g., 0.15 for 15%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit" [disabled]="isSaving || prefForm.invalid" class="btn btn-primary">
+                        {{ isSaving ? 'Saving...' : 'Save Preferences' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

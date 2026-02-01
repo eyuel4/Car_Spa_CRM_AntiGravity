@@ -123,3 +123,39 @@ export interface LoyaltySettings {
     diamond_tier_min: number;
     points_expiry_months?: number;
 }
+
+export interface Supplier {
+    id: number;
+    name: string;
+    contact_name?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+    is_active: boolean;
+    created_at?: string;
+}
+
+export interface InventoryItem {
+    id: number;
+    name: string;
+    sku: string;
+    description?: string;
+    category?: string; // string for now, could be Category object later
+    unit: string;
+    current_stock: number;
+    reorder_level: number;
+    price: string; // Cost price
+    supplier?: number; // ID
+    supplier_name?: string; // Read-only from serializer
+    stock_status?: 'LOW' | 'MEDIUM' | 'GOOD';
+    created_at?: string;
+}
+
+export interface StockLog {
+    id: number;
+    product: number;
+    product_name?: string;
+    change_amount: number;
+    reason: string;
+    created_at: string;
+}

@@ -47,6 +47,10 @@ export const routes: Routes = [
                 loadChildren: () => import('./features/marketing/marketing.routes').then(m => m.MARKETING_ROUTES)
             },
             {
+                path: 'inventory',
+                loadChildren: () => import('./features/inventory/inventory.routes').then(m => m.INVENTORY_ROUTES)
+            },
+            {
                 path: 'settings',
                 loadChildren: () => import('./features/settings/settings.routes').then(m => m.SETTINGS_ROUTES),
                 canActivate: [roleGuard],

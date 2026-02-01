@@ -1,0 +1,95 @@
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Marketing Coupons</h1>
+            <p class="text-gray-600">Manage promotional codes and discounts</p>
+        </div>
+        <button class="btn btn-primary" (click)="onAddCoupon()">
+            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Create Coupon
+        </button>
+    </div>
+
+    <!-- Filters -->
+    <div class="card">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()"
+                placeholder="Search coupons by name or code..." class="input-field">
+            <select [(ngModel)]="filterStatus" (change)="onFilterChange()" class="input-field">
+                <option value="all">All Statuses</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="expired">Expired</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex justify-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+    </div>
+
+    <!-- Coupon Grid -->
+    <div *ngIf="!isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let coupon of filteredCoupons"
+            class="card relative overflow-hidden group hover:shadow-lg transition">
+            <!-- Status Badge -->
+            <div class="absolute top-4 right-4">
+                <span [class]="coupon.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
+                    class="px-2 py-1 text-xs font-semibold rounded-full">
+                    {{ coupon.is_active ? 'ACTIVE' : 'INACTIVE' }}
+                </span>
+            </div>
+
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h3 class="font-bold text-lg text-gray-900">{{ coupon.name }}</h3>
+                    <p *ngIf="coupon.code"
+                        class="text-sm font-mono bg-gray-100 px-2 py-1 rounded inline-block mt-1 text-primary-700">
+                        {{ coupon.code }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <p class="text-3xl font-bold text-gray-900">
+                    {{ coupon.discount_type === 'PERCENTAGE' ? (coupon.value | number) + '%' : ('$' + coupon.value) }}
+                    <span class="text-sm font-normal text-gray-500">OFF</span>
+                </p>
+                <p class="text-sm text-gray-500 mt-2 line-clamp-2">{{ coupon.description || 'No description' }}</p>
+            </div>
+
+            <div class="text-xs text-gray-500 space-y-1 mb-4 border-t border-gray-100 pt-3">
+                <div class="flex justify-between">
+                    <span>Redemptions:</span>
+                    <span class="font-medium">{{ coupon.times_redeemed }} / {{ coupon.max_redemptions || '∞' }}</span>
+                </div>
+                <div class="flex justify-between" *ngIf="coupon.valid_until">
+                    <span>Expires:</span>
+                    <span class="font-medium">{{ coupon.valid_until | date:'mediumDate' }}</span>
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <button (click)="onToggleActive(coupon)" class="btn btn-sm flex-1"
+                    [class]="coupon.is_active ? 'btn-secondary text-red-600' : 'btn-secondary text-green-600'">
+                    {{ coupon.is_active ? 'Deactivate' : 'Activate' }}
+                </button>
+                <button (click)="onEditCoupon(coupon.id)" class="btn btn-sm btn-primary flex-1">
+                    Edit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && filteredCoupons.length === 0" class="text-center py-12 card">
+        <div class="text-6xl mb-4">🏷️</div>
+        <h3 class="text-lg font-medium text-gray-900">No coupons found</h3>
+        <p class="text-gray-500 mt-1">Create your first coupon to start a promotion.</p>
+        <button class="btn btn-primary mt-4" (click)="onAddCoupon()">Create Coupon</button>
+    </div>
+</div>

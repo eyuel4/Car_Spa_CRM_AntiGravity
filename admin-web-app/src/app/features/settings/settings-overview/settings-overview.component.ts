@@ -17,6 +17,33 @@ import { TranslateModule } from '@ngx-translate/core';
 
       <!-- Settings Cards -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        
+        <!-- Business Profile -->
+        <button (click)="navigateTo('profile')" class="card hover:shadow-lg transition-shadow text-left">
+          <div class="flex items-center gap-4 mb-3">
+            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+              <span class="text-2xl">🏢</span>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900">Business Profile</h3>
+              <p class="text-sm text-gray-600">Manage verified business details</p>
+            </div>
+          </div>
+        </button>
+
+        <!-- My Profile -->
+        <button (click)="navigateTo('my-profile')" class="card hover:shadow-lg transition-shadow text-left">
+          <div class="flex items-center gap-4 mb-3">
+             <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+               <span class="text-2xl">👤</span>
+             </div>
+             <div>
+               <h3 class="font-semibold text-gray-900">My Profile</h3>
+               <p class="text-sm text-gray-600">Update personal info & password</p>
+             </div>
+           </div>
+         </button>
+
         <button (click)="navigateTo('shops')" class="card hover:shadow-lg transition-shadow text-left">
           <div class="flex items-center gap-4 mb-3">
             <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
@@ -31,7 +58,7 @@ import { TranslateModule } from '@ngx-translate/core';
           </div>
         </button>
 
-        <button (click)="navigateTo('localization')" class="card hover:shadow-lg transition-shadow text-left">
+        <button (click)="navigateTo('preferences')" class="card hover:shadow-lg transition-shadow text-left">
           <div class="flex items-center gap-4 mb-3">
             <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
               <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -39,8 +66,8 @@ import { TranslateModule } from '@ngx-translate/core';
               </svg>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">{{ 'SETTINGS.LOCALIZATION.TITLE' | translate }}</h3>
-              <p class="text-sm text-gray-600">{{ 'SETTINGS.LOCALIZATION.SUBTITLE' | translate }}</p>
+              <h3 class="font-semibold text-gray-900">System Preferences</h3>
+              <p class="text-sm text-gray-600">Currency, Timezone & Localization</p>
             </div>
           </div>
         </button>

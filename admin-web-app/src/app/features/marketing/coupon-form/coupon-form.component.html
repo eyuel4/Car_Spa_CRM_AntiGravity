@@ -1,0 +1,103 @@
+<div class="max-w-3xl mx-auto">
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ isEditMode ? 'Edit Coupon' : 'Create Coupon' }}</h1>
+            <p class="text-gray-600">Configure discount rules and validity.</p>
+        </div>
+        <button [class.btn-loading]="isSubmitting" (click)="onSubmit()" [disabled]="isSubmitting || couponForm.invalid"
+            class="btn btn-primary">
+            {{ isEditMode ? 'Save Changes' : 'Create Coupon' }}
+        </button>
+    </div>
+
+    <div class="card" *ngIf="!isLoading">
+        <form [formGroup]="couponForm" class="space-y-6">
+            <!-- Basic Info -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Campaign Name</label>
+                    <input type="text" formControlName="name" class="input-field mt-1"
+                        placeholder="e.g. Summer Sale 2026">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Coupon Code</label>
+                    <div class="relative mt-1">
+                        <input type="text" formControlName="code"
+                            class="input-field uppercase tracking-wider font-mono pl-10" placeholder="SUMMER2026">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 text-sm">#</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea formControlName="description" rows="3" class="input-field mt-1"
+                    placeholder="Internal notes or terms for this coupon..."></textarea>
+            </div>
+
+            <!-- Discount Value -->
+            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h3 class="text-sm font-medium text-gray-900 mb-4">Discount Configuration</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Type</label>
+                        <select formControlName="discount_type" class="input-field mt-1">
+                            <option value="PERCENTAGE">Percentage (%)</option>
+                            <option value="FIXED">Fixed Amount ($)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Value</label>
+                        <div class="relative mt-1">
+                            <input type="number" formControlName="value" class="input-field pl-8">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm">{{ couponForm.get('discount_type')?.value === 'FIXED' ?
+                                    '$' : '%' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Limits & Validity -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Min. Purchase Amount ($)</label>
+                    <input type="number" formControlName="min_purchase_amount" class="input-field mt-1"
+                        placeholder="0.00">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Max Redemptions (Total)</label>
+                    <input type="number" formControlName="max_redemptions" class="input-field mt-1"
+                        placeholder="Leave blank for unlimited">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Valid From</label>
+                    <input type="date" formControlName="valid_from" class="input-field mt-1">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Expires On</label>
+                    <input type="date" formControlName="valid_until" class="input-field mt-1">
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 pt-6 flex items-center">
+                <input type="checkbox" id="is_active" formControlName="is_active"
+                    class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                <label for="is_active" class="ml-2 block text-sm text-gray-900">
+                    Active (Coupon can be redeemed immediately)
+                </label>
+            </div>
+        </form>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-6 flex justify-end gap-3">
+        <button (click)="onCancel()" class="btn btn-secondary">Cancel</button>
+        <button (click)="onSubmit()" [disabled]="isSubmitting || couponForm.invalid" class="btn btn-primary">
+            {{ isEditMode ? 'Save Changes' : 'Create Coupon' }}
+        </button>
+    </div>
+</div>

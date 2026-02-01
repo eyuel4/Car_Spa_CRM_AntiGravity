@@ -3,8 +3,23 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db import models
-from inventory.models import Product, StockLog
-from inventory.serializers import ProductSerializer, StockLogSerializer
+from inventory.models import Product, StockLog, Supplier
+from inventory.serializers import ProductSerializer, StockLogSerializer, SupplierSerializer
+
+
+class SupplierViewSet(viewsets.ModelViewSet):
+    """ViewSet for managing Suppliers"""
+    serializer_class = SupplierSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'contact_name', 'email']
+    ordering_fields = ['name', 'created_at']
+    ordering = ['name']
+
+    def get_queryset(self):
+        return Supplier.objects.filter(tenant=self.request.user.tenant)
+
+    def perform_create(self, serializer):
+        serializer.save(tenant=self.request.user.tenant)
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -18,8 +33,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     """
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['unit']
-    search_fields = ['name']
+    filterset_fields = ['unit', 'category', 'supplier']
+    search_fields = ['name', 'sku']
     ordering_fields = ['name', 'current_stock', 'created_at']
     ordering = ['name']
     

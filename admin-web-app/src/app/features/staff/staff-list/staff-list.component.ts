@@ -18,12 +18,18 @@ import { Staff } from '../../../core/models/business.model';
           <h1 class="text-2xl font-bold text-gray-900">{{ 'STAFF.TITLE' | translate }}</h1>
           <p class="text-gray-600 mt-1">{{ 'STAFF.SUBTITLE' | translate }}</p>
         </div>
-        <button class="btn btn-primary" (click)="onAddStaff()">
-          <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-          </svg>
-          {{ 'STAFF.ADD_STAFF' | translate }}
-        </button>
+        <div class="flex gap-3">
+            <button class="btn btn-secondary" (click)="onViewLeaderboard()">
+                <span class="text-xl mr-2">🏆</span>
+                Leaderboard
+            </button>
+            <button class="btn btn-primary" (click)="onAddStaff()">
+            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            {{ 'STAFF.ADD_STAFF' | translate }}
+            </button>
+        </div>
       </div>
 
       <!-- Filters -->
@@ -222,6 +228,10 @@ export class StaffListComponent implements OnInit {
 
   onViewDetail(id: number): void {
     this.router.navigate(['/staff', id]);
+  }
+
+  onViewLeaderboard(): void {
+    this.router.navigate(['/staff/performance']);
   }
 
   onAddStaff(): void {

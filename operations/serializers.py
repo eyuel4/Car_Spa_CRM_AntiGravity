@@ -49,12 +49,15 @@ class JobItemSerializer(serializers.ModelSerializer):
 class JobListSerializer(serializers.ModelSerializer):
     customer_name = serializers.SerializerMethodField()
     car_info = serializers.SerializerMethodField()
+    items = JobItemSerializer(many=True, read_only=True)
+    total_price = serializers.SerializerMethodField()
     
     class Meta:
         model = Job
         fields = [
             'id', 'customer', 'customer_name', 'car', 'car_info',
-            'status', 'payment_method', 'created_at', 'updated_at'
+            'status', 'payment_method', 'items', 'total_price',
+            'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
     
@@ -64,20 +67,26 @@ class JobListSerializer(serializers.ModelSerializer):
     def get_car_info(self, obj):
         return f"{obj.car.make} {obj.car.model} ({obj.car.plate_number})"
 
+    def get_total_price(self, obj):
+        return sum(item.price for item in obj.items.all())
 
-class JobDetailSerializer(serializers.ModelSerializer):
+
     customer_name = serializers.SerializerMethodField()
     car_info = serializers.SerializerMethodField()
     items = JobItemSerializer(many=True, read_only=True)
+    total_price = serializers.SerializerMethodField()
     
     class Meta:
         model = Job
         fields = [
             'id', 'customer', 'customer_name', 'car', 'car_info',
-            'status', 'payment_method', 'qr_code', 'items',
+            'status', 'payment_method', 'qr_code', 'items', 'total_price',
             'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'qr_code', 'created_at', 'updated_at']
+
+    def get_total_price(self, obj):
+        return sum(item.price for item in obj.items.all())
     
     def get_customer_name(self, obj):
         return f"{obj.customer.first_name} {obj.customer.last_name}"

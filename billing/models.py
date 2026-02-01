@@ -19,13 +19,23 @@ class Discount(TenantAwareModel):
     )
     
     name = models.CharField(max_length=100)
+    code = models.CharField(max_length=20, unique=True, blank=True, null=True, help_text="Unique code for coupons")
+    description = models.TextField(blank=True, null=True)
     discount_type = models.CharField(max_length=20, choices=DISCOUNT_TYPE_CHOICES)
     value = models.DecimalField(max_digits=10, decimal_places=2, help_text="Percentage (e.g. 10) or Fixed Amount (e.g. 5.00)")
+    
+    # Usage limits
+    max_redemptions = models.PositiveIntegerField(blank=True, null=True, help_text="Max total uses. Leave blank for unlimited.")
+    times_redeemed = models.PositiveIntegerField(default=0)
+    min_purchase_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    
     is_active = models.BooleanField(default=True)
     valid_from = models.DateField(blank=True, null=True)
     valid_until = models.DateField(blank=True, null=True)
 
     def __str__(self):
+        if self.code:
+             return f"Coupon {self.code} - {self.name}"
         if self.discount_type == 'PERCENTAGE':
             return f"{self.name} ({self.value}%)"
         return f"{self.name} (${self.value})"

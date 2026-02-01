@@ -5,7 +5,7 @@ from staff.views import StaffViewSet
 from services.views import ServiceViewSet, CategoryViewSet, CarTypeViewSet
 from operations.views import JobViewSet, JobTaskViewSet
 from operations.qc_views import QCChecklistItemViewSet, JobQCRecordViewSet
-from inventory.views import ProductViewSet, StockLogViewSet
+from inventory.views import ProductViewSet, StockLogViewSet, SupplierViewSet
 from billing.views import (
     ReceiptViewSet, InvoiceViewSet, PaymentViewSet,
     TaxConfigurationViewSet, DiscountViewSet
@@ -31,6 +31,7 @@ router.register(r'tasks', JobTaskViewSet, basename='task')
 router.register(r'qc-checklist', QCChecklistItemViewSet, basename='qcchecklist')
 router.register(r'qc-records', JobQCRecordViewSet, basename='qcrecord')
 router.register(r'products', ProductViewSet, basename='product')
+router.register(r'suppliers', SupplierViewSet, basename='supplier')
 router.register(r'stock-logs', StockLogViewSet, basename='stocklog')
 router.register(r'receipts', ReceiptViewSet, basename='receipt')
 router.register(r'invoices', InvoiceViewSet, basename='invoice')

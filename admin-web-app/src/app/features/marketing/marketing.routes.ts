@@ -1,19 +1,18 @@
 import { Routes } from '@angular/router';
-import { MarketingOverviewComponent } from './marketing-overview/marketing-overview.component';
-import { LoyaltySettingsComponent } from './loyalty-settings/loyalty-settings.component';
-import { CouponsListComponent } from './coupons-list/coupons-list.component';
+import { CouponListComponent } from './coupon-list/coupon-list.component';
+import { CouponFormComponent } from './coupon-form/coupon-form.component';
 
 export const MARKETING_ROUTES: Routes = [
     {
         path: '',
-        component: MarketingOverviewComponent
+        component: CouponListComponent
     },
     {
-        path: 'loyalty',
-        component: LoyaltySettingsComponent
+        path: 'new',
+        component: CouponFormComponent
     },
     {
-        path: 'coupons',
-        component: CouponsListComponent
+        path: ':id',
+        component: CouponFormComponent
     }
 ];

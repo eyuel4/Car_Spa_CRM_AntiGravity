@@ -13,8 +13,9 @@ class DiscountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discount
         fields = [
-            'id', 'name', 'discount_type', 'value', 'is_active',
-            'valid_from', 'valid_until', 'created_at', 'updated_at'
+            'id', 'name', 'code', 'description', 'discount_type', 'value', 
+            'max_redemptions', 'times_redeemed', 'min_purchase_amount',
+            'is_active', 'valid_from', 'valid_until', 'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
 

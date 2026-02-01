@@ -54,6 +54,23 @@ export class OperationsService {
         return this.http.get<JobTask[]>(`${this.apiUrl}${jobId}/tasks/`);
     }
 
+    getAllTasks(filters?: any): Observable<JobTask[]> {
+        let params = new HttpParams();
+        if (filters) {
+            Object.keys(filters).forEach(key => {
+                if (filters[key] !== null && filters[key] !== undefined) {
+                    params = params.set(key, filters[key]);
+                }
+            });
+        }
+        // Note: Check backend URL for general tasks list. Assuming '/api/v1/tasks/' 
+        // Based on other endpoints, it might be separate. 
+        // Looking at views.py: JobTaskViewSet is likely at /tasks/.
+        return this.http.get<{ results: JobTask[] }>(`${environment.apiUrl}/tasks/`, { params }).pipe(
+            map(response => response.results || [])
+        );
+    }
+
     createTask(task: Partial<JobTask>): Observable<JobTask> {
         return this.http.post<JobTask>(`${environment.apiUrl}/tasks/`, task);
     }

@@ -20,17 +20,20 @@
     <div class="card">
         <div class="flex flex-col items-center gap-4 py-6">
             <div class="relative">
-                <div *ngIf="!photoPreview" 
+                <div *ngIf="!photoPreview"
                     class="w-32 h-32 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 text-4xl font-bold">
                     {{ getInitials() }}
                 </div>
-                <img *ngIf="photoPreview" [src]="photoPreview" 
-                    alt="Staff Photo" 
+                <img *ngIf="photoPreview" [src]="photoPreview" alt="Staff Photo"
                     class="w-32 h-32 rounded-full object-cover border-4 border-primary-200">
-                <label class="absolute bottom-0 right-0 bg-primary-600 text-white rounded-full p-2 cursor-pointer hover:bg-primary-700 transition">
+                <label
+                    class="absolute bottom-0 right-0 bg-primary-600 text-white rounded-full p-2 cursor-pointer hover:bg-primary-700 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
                     <input type="file" accept="image/*" (change)="onPhotoSelected($event)" class="hidden">
                 </label>
@@ -46,18 +49,13 @@
     <div class="card">
         <div class="border-b border-gray-200">
             <nav class="flex overflow-x-auto -mb-px">
-                <button
-                    (click)="activeTab = 'profile'"
-                    [class.border-primary-600]="activeTab === 'profile'"
+                <button (click)="activeTab = 'profile'" [class.border-primary-600]="activeTab === 'profile'"
                     [class.text-primary-600]="activeTab === 'profile'"
-                    [class.border-transparent]="activeTab !== 'profile'"
-                    [class.text-gray-500]="activeTab !== 'profile'"
+                    [class.border-transparent]="activeTab !== 'profile'" [class.text-gray-500]="activeTab !== 'profile'"
                     class="whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm hover:text-gray-700 hover:border-gray-300">
                     Profile
                 </button>
-                <button
-                    *ngIf="!isNew"
-                    (click)="activeTab = 'performance'"
+                <button *ngIf="!isNew" (click)="activeTab = 'performance'"
                     [class.border-primary-600]="activeTab === 'performance'"
                     [class.text-primary-600]="activeTab === 'performance'"
                     [class.border-transparent]="activeTab !== 'performance'"
@@ -79,14 +77,14 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
                             <input type="text" formControlName="first_name" class="input-field"
                                 [class.border-red-500]="staffForm.get('first_name')?.invalid && staffForm.get('first_name')?.touched">
-                            <p *ngIf="staffForm.get('first_name')?.invalid && staffForm.get('first_name')?.touched" 
+                            <p *ngIf="staffForm.get('first_name')?.invalid && staffForm.get('first_name')?.touched"
                                 class="text-red-500 text-xs mt-1">First name is required</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
                             <input type="text" formControlName="last_name" class="input-field"
                                 [class.border-red-500]="staffForm.get('last_name')?.invalid && staffForm.get('last_name')?.touched">
-                            <p *ngIf="staffForm.get('last_name')?.invalid && staffForm.get('last_name')?.touched" 
+                            <p *ngIf="staffForm.get('last_name')?.invalid && staffForm.get('last_name')?.touched"
                                 class="text-red-500 text-xs mt-1">Last name is required</p>
                         </div>
                         <div>
@@ -97,14 +95,15 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">Sex</label>
                             <select formControlName="sex" class="input-field">
                                 <option value="">Select...</option>
-                                <option *ngFor="let option of sexOptions" [value]="option.value">{{ option.label }}</option>
+                                <option *ngFor="let option of sexOptions" [value]="option.value">{{ option.label }}
+                                </option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
                             <input type="tel" formControlName="phone_number" class="input-field"
                                 [class.border-red-500]="staffForm.get('phone_number')?.invalid && staffForm.get('phone_number')?.touched">
-                            <p *ngIf="staffForm.get('phone_number')?.invalid && staffForm.get('phone_number')?.touched" 
+                            <p *ngIf="staffForm.get('phone_number')?.invalid && staffForm.get('phone_number')?.touched"
                                 class="text-red-500 text-xs mt-1">Phone number is required</p>
                         </div>
                         <div>
@@ -137,26 +136,26 @@
                 <div class="mb-8">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold text-gray-900">Emergency Contacts *</h3>
-                        <button type="button" 
-                            (click)="addEmergencyContact()" 
-                            [disabled]="emergencyContactsFormArray.length >= 2"
-                            class="btn btn-secondary text-sm">
+                        <button type="button" (click)="addEmergencyContact()"
+                            [disabled]="emergencyContactsFormArray.length >= 2" class="btn btn-secondary text-sm">
                             <svg class="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4"></path>
                             </svg>
                             Add Contact
                         </button>
                     </div>
 
                     <div class="space-y-4">
-                        <div *ngFor="let contact of emergencyContactControls; let i = index" 
-                            [formGroup]="contact" 
+                        <div *ngFor="let contact of emergencyContactControls; let i = index" [formGroup]="contact"
                             class="card bg-gray-50">
                             <div class="flex justify-between items-start mb-4">
                                 <h4 class="font-medium text-gray-900">Emergency Contact {{ i + 1 }}</h4>
-                                <button type="button" (click)="removeEmergencyContact(i)" class="text-red-600 hover:text-red-800">
+                                <button type="button" (click)="removeEmergencyContact(i)"
+                                    class="text-red-600 hover:text-red-800">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
                                     </svg>
                                 </button>
                             </div>
@@ -173,7 +172,8 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Sex</label>
                                     <select formControlName="sex" class="input-field">
                                         <option value="">Select...</option>
-                                        <option *ngFor="let option of sexOptions" [value]="option.value">{{ option.label }}</option>
+                                        <option *ngFor="let option of sexOptions" [value]="option.value">{{ option.label
+                                            }}</option>
                                     </select>
                                 </div>
                                 <div>
@@ -194,7 +194,8 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Relationship</label>
-                                    <input type="text" formControlName="relationship" placeholder="e.g., Spouse, Parent" class="input-field">
+                                    <input type="text" formControlName="relationship" placeholder="e.g., Spouse, Parent"
+                                        class="input-field">
                                 </div>
                                 <div class="flex items-center">
                                     <label class="flex items-center cursor-pointer">
@@ -221,7 +222,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">Title *</label>
                             <input type="text" formControlName="title" class="input-field"
                                 [class.border-red-500]="staffForm.get('title')?.invalid && staffForm.get('title')?.touched">
-                            <p *ngIf="staffForm.get('title')?.invalid && staffForm.get('title')?.touched" 
+                            <p *ngIf="staffForm.get('title')?.invalid && staffForm.get('title')?.touched"
                                 class="text-red-500 text-xs mt-1">Title is required</p>
                         </div>
                         <div>
@@ -229,12 +230,13 @@
                             <input type="date" formControlName="hire_date" class="input-field"
                                 [disabled]="!canEditHireDate"
                                 [class.border-red-500]="staffForm.get('hire_date')?.invalid && staffForm.get('hire_date')?.touched">
-                            <p *ngIf="staffForm.get('hire_date')?.invalid && staffForm.get('hire_date')?.touched" 
+                            <p *ngIf="staffForm.get('hire_date')?.invalid && staffForm.get('hire_date')?.touched"
                                 class="text-red-500 text-xs mt-1">Hire date is required</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Salary</label>
-                            <input type="number" step="0.01" formControlName="salary" class="input-field" placeholder="Monthly salary">
+                            <input type="number" step="0.01" formControlName="salary" class="input-field"
+                                placeholder="Monthly salary">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Shop Assignment</label>
@@ -259,35 +261,50 @@
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Select Year</label>
                 <select [(ngModel)]="performanceYear" (change)="onPerformanceYearChange()" class="input-field w-48">
-                    <option *ngFor="let year of [performanceYear - 2, performanceYear - 1, performanceYear, performanceYear + 1]" 
+                    <option
+                        *ngFor="let year of [performanceYear - 2, performanceYear - 1, performanceYear, performanceYear + 1]"
                         [value]="year">{{ year }}</option>
                 </select>
             </div>
 
-            <div *ngIf="performanceData" class="space-y-4">
-                <div class="card bg-primary-50">
-                    <p class="text-sm text-gray-600">Total Services Completed</p>
-                    <p class="text-3xl font-bold text-primary-600">{{ performanceData.total_services }}</p>
+            <div *ngIf="performanceData" class="space-y-6">
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="card bg-white border border-gray-200 p-4">
+                        <p class="text-sm font-medium text-gray-500">Tasks Completed</p>
+                        <p class="text-3xl font-bold text-primary-600 mt-1">{{ performanceData.tasksCompleted }}</p>
+                    </div>
+                    <div class="card bg-white border border-gray-200 p-4">
+                        <p class="text-sm font-medium text-gray-500">Total Hours</p>
+                        <p class="text-3xl font-bold text-gray-900 mt-1">{{ performanceData.totalHours }}h</p>
+                    </div>
+                    <div class="card bg-white border border-gray-200 p-4">
+                        <p class="text-sm font-medium text-gray-500">Avg Duration</p>
+                        <p class="text-3xl font-bold text-gray-900 mt-1">{{ performanceData.avgDuration }}h</p>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <h4 class="text-lg font-semibold mb-4">Monthly Breakdown</h4>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-gray-50 border-b border-gray-200">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Month</th>
-                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Services Completed</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <tr *ngFor="let month of performanceData.monthly_breakdown" class="hover:bg-gray-50">
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">{{ month.month_name }}</td>
-                                    <td class="px-4 py-3 text-sm text-right text-gray-900">{{ month.services_completed }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <!-- Recent Activity -->
+                <div class="card bg-gray-50 border border-gray-200 p-6">
+                    <h4 class="text-lg font-semibold mb-4 text-gray-900">Recent Tasks</h4>
+                    <div class="space-y-4" *ngIf="performanceData.recentTasks?.length > 0; else noActivity">
+                        <div class="flex items-center bg-white p-3 rounded-md shadow-sm border border-gray-100"
+                            *ngFor="let task of performanceData.recentTasks">
+                            <div class="w-2 h-2 rounded-full bg-green-500 mr-3"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-900">{{ task.task_name }}</p>
+                                <p class="text-xs text-gray-500">
+                                    {{ task.end_time | date:'mediumDate' }} • {{ task.duration_hours | number:'1.1-1'
+                                    }}h
+                                </p>
+                            </div>
+                            <span
+                                class="text-xs font-semibold px-2 py-1 bg-green-100 text-green-800 rounded-full">DONE</span>
+                        </div>
                     </div>
+                    <ng-template #noActivity>
+                        <p class="text-gray-500 text-sm italic">No completed tasks found for this period.</p>
+                    </ng-template>
                 </div>
             </div>
         </div>
@@ -307,7 +324,9 @@
             </svg>
             <svg *ngIf="saving" class="animate-spin w-5 h-5 mr-2 inline" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
             </svg>
             {{ saving ? 'Saving...' : 'Save' }}
         </button>
@@ -319,32 +338,21 @@
     <div class="flex items-center justify-center py-12">
         <svg class="animate-spin h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
         </svg>
     </div>
 </div>
 
 <!-- Confirmation Modals -->
-<app-confirmation-modal 
-    [isOpen]="showSaveConfirmation" 
-    title="Save Changes?"
-    message="Are you sure you want to save these staff details?"
-    confirmText="Save"
-    cancelText="Cancel"
-    confirmClass="btn-primary"
-    icon="info"
-    (confirmed)="confirmSave()"
-    (cancelled)="discardSave()">
+<app-confirmation-modal [isOpen]="showSaveConfirmation" title="Save Changes?"
+    message="Are you sure you want to save these staff details?" confirmText="Save" cancelText="Cancel"
+    confirmClass="btn-primary" icon="info" (confirmed)="confirmSave()" (cancelled)="discardSave()">
 </app-confirmation-modal>
 
-<app-confirmation-modal 
-    [isOpen]="showCancelConfirmation" 
-    title="Discard Changes?"
-    message="You have unsaved changes. Are you sure you want to discard all changes?"
-    confirmText="Discard"
-    cancelText="Keep Editing"
-    confirmClass="btn-danger"
-    icon="warning"
-    (confirmed)="confirmCancel()"
+<app-confirmation-modal [isOpen]="showCancelConfirmation" title="Discard Changes?"
+    message="You have unsaved changes. Are you sure you want to discard all changes?" confirmText="Discard"
+    cancelText="Keep Editing" confirmClass="btn-danger" icon="warning" (confirmed)="confirmCancel()"
     (cancelled)="keepEditing()">
 </app-confirmation-modal>
