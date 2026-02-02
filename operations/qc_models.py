@@ -4,6 +4,7 @@ from core.models import TenantAwareModel
 
 class QCChecklistItem(TenantAwareModel):
     """Quality Control checklist items configurable by tenant"""
+    service = models.ForeignKey('services.Service', on_delete=models.CASCADE, null=True, blank=True, related_name='qc_items', help_text="If null, applies to all jobs (Global)")
     name = models.CharField(max_length=200, help_text="QC item description")
     order = models.IntegerField(default=0, help_text="Display order")
     is_active = models.BooleanField(default=True)

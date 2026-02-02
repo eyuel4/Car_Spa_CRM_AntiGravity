@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils import timezone
+from django.db import models
 from operations.models import Job, JobItem, JobTask
 from operations.serializers import (
     JobListSerializer, JobDetailSerializer,
@@ -81,17 +82,100 @@ class JobViewSet(viewsets.ModelViewSet):
         serializer = JobItemSerializer(job_item)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    @action(detail=True, methods=['get'])
-    def tasks(self, request, pk=None):
-        """Get all tasks for this job"""
-        job = self.get_object()
-        tasks = JobTask.objects.filter(
-            job_item__job=job,
-            tenant=request.user.tenant
-        ).select_related('job_item__service', 'staff')
+    @action(detail=True, methods=['post'])
+    def start_qc(self, request, pk=None):
+        """Start QC process for a job"""
+        from operations.qc_models import JobQCRecord, QCChecklistItem, QCChecklistResponse
         
-        serializer = JobTaskSerializer(tasks, many=True)
-        return Response(serializer.data)
+        job = self.get_object()
+        
+        # Create QC Record if not exists
+        qc_record, created = JobQCRecord.objects.get_or_create(
+            job=job,
+            defaults={
+                'tenant': request.user.tenant,
+                'checked_by': request.user
+            }
+        )
+        
+        # Update job status
+        job.status = 'QC'
+        job.save()
+        
+        # Populate Checklist Items
+        # 1. Global Items (service is null)
+        # 2. Service-specific items (match job items)
+        
+        # Get Job's service IDs
+        service_ids = job.items.values_list('service_id', flat=True)
+        
+        checklist_items = QCChecklistItem.objects.filter(
+            tenant=request.user.tenant,
+            is_active=True
+        ).filter(
+            models.Q(service__isnull=True) | models.Q(service_id__in=service_ids)
+        ).distinct()
+        
+        # Create empty responses for each item if not exists
+        for item in checklist_items:
+            QCChecklistResponse.objects.get_or_create(
+                tenant=request.user.tenant,
+                qc_record=qc_record,
+                checklist_item=item
+            )
+            
+        return Response({'status': 'QC Started', 'qc_record_id': qc_record.id})
+
+    @action(detail=True, methods=['get', 'post'])
+    def qc_checklist(self, request, pk=None):
+        """Get or Update QC checklist"""
+        from operations.qc_models import JobQCRecord, QCChecklistResponse
+        
+        job = self.get_object()
+        try:
+            qc_record = job.qc_record
+        except JobQCRecord.DoesNotExist:
+             return Response({'error': 'QC not started for this job'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if request.method == 'GET':
+            responses = qc_record.responses.select_related('checklist_item').order_by('checklist_item__order')
+            data = [{
+                'id': r.id,
+                'item_name': r.checklist_item.name,
+                'checked': r.checked,
+                'notes': r.notes
+            } for r in responses]
+            return Response(data)
+            
+        if request.method == 'POST':
+            # Update checklist items
+            updates = request.data.get('updates', []) # List of {id: 1, checked: true}
+            for update in updates:
+                try:
+                    resp = QCChecklistResponse.objects.get(id=update['id'], tenant=request.user.tenant)
+                    resp.checked = update.get('checked', resp.checked)
+                    resp.notes = update.get('notes', resp.notes)
+                    resp.save()
+                except QCChecklistResponse.DoesNotExist:
+                    pass
+            return Response({'status': 'Checklist Updated'})
+            
+    @action(detail=True, methods=['post'])
+    def finish_qc(self, request, pk=None):
+        """Complete QC and Job"""
+        job = self.get_object()
+        passed = request.data.get('passed', True)
+        
+        if hasattr(job, 'qc_record'):
+            job.qc_record.passed = passed
+            job.qc_record.save()
+            
+        if passed:
+            job.status = 'COMPLETED'
+            job.completed_at = timezone.now()
+            job.save()
+            
+        return Response({'status': 'Job Completed' if passed else 'QC Failed'})
 
 
 class JobTaskViewSet(viewsets.ModelViewSet):

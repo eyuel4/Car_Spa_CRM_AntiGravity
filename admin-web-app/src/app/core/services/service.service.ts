@@ -49,4 +49,63 @@ export class ServiceService {
   createCategory(category: Partial<Category>): Observable<Category> {
     return this.http.post<Category>(`${environment.apiUrl}/categories/`, category);
   }
+
+  updateCategory(id: number, category: Partial<Category>): Observable<Category> {
+    return this.http.put<Category>(`${environment.apiUrl}/categories/${id}/`, category);
+  }
+
+  deleteCategory(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/categories/${id}/`);
+  }
+
+  // Car Types
+  getCarTypes(): Observable<any[]> {
+    return this.http.get<{ results: any[] }>(`${environment.apiUrl}/car-types/`).pipe(
+      map(response => response.results || [])
+    );
+  }
+
+  createCarType(carType: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/car-types/`, carType);
+  }
+
+  updateCarType(id: number, carType: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/car-types/${id}/`, carType);
+  }
+
+  deleteCarType(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/car-types/${id}/`);
+  }
+
+  // Service Pricing
+  getServicePricing(serviceId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${serviceId}/pricing/`);
+  }
+
+  updateServicePrice(priceId: number, priceData: any): Observable<any> {
+    return this.http.patch<any>(`${environment.apiUrl}/service-prices/${priceId}/`, priceData);
+  }
+
+  createServicePrice(serviceId: number, priceData: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/service-prices/`, { ...priceData, service: serviceId });
+  }
+
+  // QC Checklist Items
+  getQCItems(serviceId?: number): Observable<any[]> {
+    let url = `${environment.apiUrl}/qc-items/`;
+    if (serviceId) {
+      url += `?service=${serviceId}`;
+    }
+    return this.http.get<{ results: any[] }>(url).pipe(
+      map(res => res.results || [])
+    );
+  }
+
+  createQCItem(item: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/qc-items/`, item);
+  }
+
+  deleteQCItem(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/qc-items/${id}/`);
+  }
 }

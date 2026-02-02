@@ -71,6 +71,7 @@ class JobListSerializer(serializers.ModelSerializer):
         return sum(item.price for item in obj.items.all())
 
 
+class JobDetailSerializer(serializers.ModelSerializer):
     customer_name = serializers.SerializerMethodField()
     car_info = serializers.SerializerMethodField()
     items = JobItemSerializer(many=True, read_only=True)

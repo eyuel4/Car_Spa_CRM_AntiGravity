@@ -7,11 +7,12 @@ import { OperationsService } from '../../../core/services/operations.service';
 import { StaffService } from '../../../core/services/staff.service';
 import { Job, JobStatus, JobTask, JobItem } from '../../../core/models/operations.model';
 import { Staff } from '../../../core/models/business.model';
+import { InvoiceGeneratorComponent } from '../../accounting/invoice-generator/invoice-generator.component';
 
 @Component({
   selector: 'app-job-detail',
   standalone: true,
-  imports: [CommonModule, TranslateModule, FormsModule],
+  imports: [CommonModule, TranslateModule, FormsModule, InvoiceGeneratorComponent],
   template: `
     <div class="max-w-4xl mx-auto space-y-6" *ngIf="job; else loading">
       <!-- Header -->
@@ -30,8 +31,10 @@ import { Staff } from '../../../core/models/business.model';
             <button (click)="goBack()" class="btn btn-secondary">Back</button>
             <!-- Quick Actions -->
             <button *ngIf="job.status === 'PENDING'" (click)="updateStatus('IN_PROGRESS')" class="btn btn-primary">Start Job</button>
-            <button *ngIf="job.status === 'IN_PROGRESS'" (click)="updateStatus('QC')" class="btn btn-primary">Send to QC</button>
-            <button *ngIf="job.status === 'QC'" (click)="openCompleteModal()" class="btn btn-success">Complete Job</button>
+            <button *ngIf="job.status === 'IN_PROGRESS'" (click)="startQC()" class="btn btn-primary">Send to QC</button>
+            <button *ngIf="job.status === 'QC'" (click)="openQCModal()" class="btn btn-primary">Resume QC</button>
+            <button *ngIf="job.status === 'COMPLETED' && !job.completed_at" (click)="openCompleteModal()" class="btn btn-success">Payment</button>
+            <button *ngIf="job.status === 'COMPLETED' || job.status === 'PAID'" (click)="showInvoiceModal = true" class="btn btn-secondary">Invoice</button>
         </div>
       </div>
 
@@ -169,6 +172,41 @@ import { Staff } from '../../../core/models/business.model';
                <div class="flex justify-end gap-3 mt-6">
                    <button (click)="closeCompleteModal()" class="btn btn-secondary">Cancel</button>
                    <button (click)="confirmComplete()" class="btn btn-success">Confirm Payment</button>
+               </div>
+           </div>
+       </div>
+
+    </div>
+
+       <!-- QC Modal -->
+       <div *ngIf="showQCModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+           <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6 h-3/4 flex flex-col">
+               <div class="flex justify-between items-center mb-4">
+                   <h3 class="text-xl font-bold">Quality Control Checklist</h3>
+                   <button (click)="closeQCModal()" class="text-gray-500 hover:text-gray-700">
+                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                   </button>
+               </div>
+
+               <div class="flex-grow overflow-y-auto mb-4 border rounded p-4 bg-gray-50">
+                   <div *ngIf="qcChecklist.length === 0" class="text-center text-gray-500 py-10">
+                       No checklist items defined for this job's services.
+                   </div>
+                   <div *ngFor="let item of qcChecklist" class="flex items-start gap-3 py-3 border-b last:border-0">
+                       <input type="checkbox" [checked]="item.checked" (change)="toggleChecklistItem(item)" class="h-5 w-5 mt-1 text-green-600 rounded">
+                       <div>
+                           <p class="font-medium text-gray-900">{{ item.item_name }}</p>
+                           <p class="text-xs text-gray-500">Required</p>
+                       </div>
+                   </div>
+               </div>
+
+               <div class="flex justify-between border-t pt-4">
+                   <button (click)="finishQC(false)" class="btn bg-red-100 text-red-700 hover:bg-red-200">Fail QC (Return to In Progress)</button>
+                   <div class="flex gap-2">
+                       <button (click)="closeQCModal()" class="btn btn-secondary">Close</button>
+                       <button (click)="finishQC(true)" class="btn btn-success">Pass QC & Complete</button>
+                   </div>
                </div>
            </div>
        </div>
@@ -360,5 +398,71 @@ export class JobDetailComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/operations']);
+  }
+
+  // --- QC Logic ---
+  qcChecklist: any[] = [];
+  showQCModal = false;
+  showInvoiceModal = false;
+
+  startQC() {
+    if (!this.job) return;
+    if (confirm('Start Quality Control process? Status will change to QC.')) {
+      this.operationsService.startQC(this.job.id).subscribe({
+        next: (res) => {
+          if (this.job) this.job.status = 'QC';
+          this.loadQCChecklist();
+          this.showQCModal = true;
+        },
+        error: (err) => console.error('Error starting QC', err)
+      });
+    }
+  }
+
+  loadQCChecklist() {
+    if (!this.job) return;
+    this.operationsService.getQCChecklist(this.job.id).subscribe({
+      next: (list) => this.qcChecklist = list,
+      error: (err) => console.error('Error loading checklist', err)
+    });
+  }
+
+  openQCModal() {
+    this.loadQCChecklist();
+    this.showQCModal = true;
+  }
+
+  closeQCModal() {
+    this.showQCModal = false;
+  }
+
+  toggleChecklistItem(item: any) {
+    item.checked = !item.checked;
+    this.saveChecklistUpdate(item);
+  }
+
+  saveChecklistUpdate(item: any) {
+    if (!this.job) return;
+    this.operationsService.updateQCChecklist(this.job.id, [{ id: item.id, checked: item.checked }]).subscribe({
+      next: () => { }, // Silent success
+      error: (err) => console.error('Error updating checklist', err)
+    });
+  }
+
+  finishQC(passed: boolean) {
+    if (!this.job) return;
+
+    const allChecked = this.qcChecklist.every(i => i.checked);
+    if (passed && !allChecked) {
+      if (!confirm('Not all checklist items are checked. Are you sure you want to pass QC?')) return;
+    }
+
+    this.operationsService.finishQC(this.job.id, passed).subscribe({
+      next: () => {
+        this.closeQCModal();
+        this.loadJob(this.job!.id); // Reload to get new status
+      },
+      error: (err) => console.error('Error finishing QC', err)
+    });
   }
 }

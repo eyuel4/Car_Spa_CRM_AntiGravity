@@ -88,4 +88,21 @@ export class OperationsService {
         // Assuming a separate endpoint or nested endpoint for tasks
         return this.http.patch(`${environment.apiUrl}/job-tasks/${taskId}/`, { staff: staffId });
     }
+
+    // QC
+    startQC(jobId: number): Observable<any> {
+        return this.http.post(`${this.apiUrl}/${jobId}/start_qc/`, {});
+    }
+
+    getQCChecklist(jobId: number): Observable<any[]> {
+        return this.http.get<any[]>(`${this.apiUrl}/${jobId}/qc_checklist/`);
+    }
+
+    updateQCChecklist(jobId: number, updates: any[]): Observable<any> {
+        return this.http.post(`${this.apiUrl}/${jobId}/qc_checklist/`, { updates });
+    }
+
+    finishQC(jobId: number, passed: boolean): Observable<any> {
+        return this.http.post(`${this.apiUrl}/${jobId}/finish_qc/`, { passed });
+    }
 }

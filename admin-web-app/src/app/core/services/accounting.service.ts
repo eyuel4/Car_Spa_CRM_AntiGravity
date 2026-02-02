@@ -48,3 +48,12 @@ export class AccountingService {
         );
     }
 }
+
+getRevenueMetrics(dateFrom ?: string, dateTo ?: string): Observable < any > {
+    let params = new HttpParams();
+    if(dateFrom) params = params.set('start_date', dateFrom);
+    if(dateTo) params = params.set('end_date', dateTo);
+
+    return this.http.get<any>(`${this.apiUrl}/invoices/metrics/`, { params });
+}
+}

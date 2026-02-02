@@ -8,5 +8,9 @@ export const ACCOUNTING_ROUTES: Routes = [
     {
         path: 'transaction/:id',
         loadComponent: () => import('./transaction-detail/transaction-detail.component').then(m => m.TransactionDetailComponent)
+    },
+    {
+        path: 'analytics',
+        loadComponent: () => import('./revenue-analytics/revenue-analytics.component').then(m => m.RevenueAnalyticsComponent)
     }
 ];

@@ -21,6 +21,18 @@ export interface Coupon {
     updated_at?: string;
 }
 
+export interface MarketingAnalytics {
+    active_coupons: number;
+    total_redemptions: number;
+    total_discount_value: number;
+    top_coupons: Array<{
+        name: string;
+        code?: string;
+        redemptions: number;
+        type: string;
+    }>;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -53,5 +65,9 @@ export class MarketingService {
 
     toggleActive(id: number, isActive: boolean): Observable<Coupon> {
         return this.http.patch<Coupon>(`${this.apiUrl}/${id}/`, { is_active: isActive });
+    }
+
+    getAnalytics(): Observable<MarketingAnalytics> {
+        return this.http.get<MarketingAnalytics>(`${this.apiUrl}/analytics/`);
     }
 }

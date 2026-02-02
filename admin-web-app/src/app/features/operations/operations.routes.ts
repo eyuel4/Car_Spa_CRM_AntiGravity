@@ -10,6 +10,10 @@ export const OPERATIONS_ROUTES: Routes = [
         loadComponent: () => import('./job-create/job-create.component').then(m => m.JobCreateComponent)
     },
     {
+        path: 'history',
+        loadComponent: () => import('./job-history/job-history.component').then(m => m.JobHistoryComponent)
+    },
+    {
         path: ':id',
         loadComponent: () => import('./job-detail/job-detail.component').then(m => m.JobDetailComponent)
     }

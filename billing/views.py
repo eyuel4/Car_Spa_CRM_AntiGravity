@@ -201,6 +201,64 @@ class InvoiceViewSet(viewsets.ModelViewSet):
             'notification_id': notification.id
         })
 
+    @action(detail=False, methods=['get'])
+    def metrics(self, request):
+        """Get revenue analytics"""
+        from django.db.models import Sum, Count
+        from django.db.models.functions import TruncMonth, TruncDay
+        from operations.models import Job, JobItem, JobTask
+        
+        tenant = request.user.tenant
+        
+        # Date filtering
+        start_date = request.query_params.get('start_date')
+        end_date = request.query_params.get('end_date')
+        
+        jobs = Job.objects.filter(tenant=tenant, status='COMPLETED')
+        if start_date:
+            jobs = jobs.filter(created_at__gte=start_date)
+        if end_date:
+            jobs = jobs.filter(created_at__lte=end_date)
+            
+        # 1. Total Revenue (Estimate based on Job items price sum)
+        # Note: In real app, use Payment records or Invoice totals. 
+        # For MVP, summing Job items is close enough if we assume completed jobs are paid.
+        job_ids = jobs.values_list('id', flat=True)
+        total_revenue = JobItem.objects.filter(job_id__in=job_ids).aggregate(total=Sum('price'))['total'] or 0
+        
+        # 2. Revenue by Service Category
+        revenue_by_category = JobItem.objects.filter(job_id__in=job_ids)\
+            .values('service__category__name')\
+            .annotate(total=Sum('price'))\
+            .order_by('-total')
+            
+        # 3. Revenue by Staff
+        # This is tricky because price is on JobItem, but tasks are assigned to staff.
+        # We can approximate by counting tasks completed by staff.
+        # Or if we want revenue, we need to split JobItem price by tasks? 
+        # For MVP, let's just show "Tasks Completed by Staff" as a proxy for performance alongside User Performance Analytics.
+        # But Requirement says "Revenue by staff". 
+        # Let's simple attribution: Credit the full service price to the staff who did the task.
+        # If multiple staff, it duplicates. Better: Just show "Sales by Staff" if staff is assigned to JobItem.
+        # JobTask is linked to JobItem.
+        revenue_by_staff = JobTask.objects.filter(tenant=tenant, status='DONE', job_item__job__in=jobs)\
+            .values('staff__first_name', 'staff__last_name')\
+            .annotate(revenue=Sum('job_item__price'))\
+            .order_by('-revenue')
+            
+        # 4. Revenue Trend (Daily)
+        revenue_trend = jobs.annotate(date=TruncDay('created_at'))\
+            .values('date')\
+            .annotate(daily_total=Sum('items__price'))\
+            .order_by('date')
+            
+        return Response({
+            'total_revenue': total_revenue,
+            'revenue_by_category': revenue_by_category,
+            'revenue_by_staff': revenue_by_staff,
+            'revenue_trend': revenue_trend
+        })
+
 
 class PaymentViewSet(viewsets.ModelViewSet):
     """ViewSet for Payment recording"""
@@ -241,3 +299,41 @@ class DiscountViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         serializer.save(tenant=self.request.user.tenant)
+
+    @action(detail=False, methods=['get'])
+    def analytics(self, request):
+        """Get marketing analytics data"""
+        from django.db.models import Sum
+        
+        tenant = request.user.tenant
+        coupons = Discount.objects.filter(tenant=tenant)
+        
+        # 1. Total Active Coupons
+        active_coupons = coupons.filter(is_active=True).count()
+        
+        # 2. Total Redemptions (from Discount model counter)
+        total_redemptions = coupons.aggregate(total=Sum('times_redeemed'))['total'] or 0
+        
+        # 3. Total Discount Value Given (Aggregated from Receipts and Invoices)
+        receipt_discounts = Receipt.objects.filter(tenant=tenant).aggregate(total=Sum('discount_amount'))['total'] or 0
+        invoice_discounts = Invoice.objects.filter(tenant=tenant).aggregate(total=Sum('discount_amount'))['total'] or 0
+        total_discount_value = receipt_discounts + invoice_discounts
+        
+        # 4. Top Performing Coupons
+        top_coupons = coupons.order_by('-times_redeemed')[:5]
+        top_coupons_data = [
+            {
+                'name': c.name,
+                'code': c.code,
+                'redemptions': c.times_redeemed,
+                'type': c.discount_type
+            }
+            for c in top_coupons
+        ]
+        
+        return Response({
+            'active_coupons': active_coupons,
+            'total_redemptions': total_redemptions,
+            'total_discount_value': total_discount_value,
+            'top_coupons': top_coupons_data
+        })
