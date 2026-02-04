@@ -4,6 +4,7 @@ from customers.views import CustomerViewSet, CarViewSet
 from staff.views import StaffViewSet
 from services.views import ServiceViewSet, CategoryViewSet, CarTypeViewSet
 from operations.views import JobViewSet, JobTaskViewSet
+from operations.visit_views import VisitViewSet
 from operations.qc_views import QCChecklistItemViewSet, JobQCRecordViewSet
 from inventory.views import ProductViewSet, StockLogViewSet, SupplierViewSet
 from billing.views import (
@@ -27,6 +28,7 @@ router.register(r'services', ServiceViewSet, basename='service')
 router.register(r'categories', CategoryViewSet, basename='category')
 router.register(r'car-types', CarTypeViewSet, basename='cartype')
 router.register(r'jobs', JobViewSet, basename='job')
+router.register(r'visits', VisitViewSet, basename='visit')
 router.register(r'tasks', JobTaskViewSet, basename='task')
 router.register(r'qc-checklist', QCChecklistItemViewSet, basename='qcchecklist')
 router.register(r'qc-records', JobQCRecordViewSet, basename='qcrecord')
