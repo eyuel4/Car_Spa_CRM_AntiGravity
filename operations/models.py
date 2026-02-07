@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from decimal import Decimal
 from core.models import TenantAwareModel
 from customers.models import Customer, Car
 from services.models import Service
@@ -170,9 +171,9 @@ class Visit(TenantAwareModel):
     
     def calculate_totals(self):
         """Calculate subtotal, tax, and total from services"""
-        self.subtotal = sum(vs.price for vs in self.visit_services.all())
+        self.subtotal = sum((vs.price for vs in self.visit_services.all()), Decimal('0.00'))
         # Tax rate: 15% (can be made configurable)
-        self.tax = self.subtotal * 0.15
+        self.tax = self.subtotal * Decimal('0.15')
         self.total = self.subtotal + self.tax + self.tip
         self.save(update_fields=['subtotal', 'tax', 'total'])
 

@@ -8,7 +8,7 @@ from operations.models import Visit, VisitService
 from operations.visit_serializers import (
     VisitListSerializer, VisitDetailSerializer, VisitCreateSerializer,
     SearchResultSerializer, VehicleSerializer, AddServicesSerializer,
-    ProcessPaymentSerializer, ConvertToCustomerSerializer
+    ProcessPaymentSerializer, ConvertToCustomerSerializer, LinkCustomerSerializer
 )
 from customers.models import Customer, Car
 from services.models import Service
@@ -144,12 +144,16 @@ class VisitViewSet(viewsets.ModelViewSet):
             if visit.car_type:
                 from services.models import ServicePrice
                 try:
-                    service_price = ServicePrice.objects.get(
+                    # Use filter().first() to avoid MultipleObjectsReturned and Handle Case Sensitivity
+                    service_price = ServicePrice.objects.filter(
                         service=service,
-                        car_type__name=visit.car_type
-                    )
-                    price = service_price.price
-                except ServicePrice.DoesNotExist:
+                        car_type__name__iexact=visit.car_type
+                    ).first()
+                    
+                    if service_price:
+                        price = service_price.price
+                except Exception as e:
+                    print(f"Error finding price: {e}")
                     pass
             
             # Create visit service
@@ -162,6 +166,8 @@ class VisitViewSet(viewsets.ModelViewSet):
             )
         
         # Recalculate totals
+        # Refresh from db to clear prefetch_related cache and see new services
+        visit.refresh_from_db()
         visit.calculate_totals()
         
         # Return updated visit
@@ -213,7 +219,7 @@ class VisitViewSet(viewsets.ModelViewSet):
             customer_type='INDIVIDUAL',
             first_name=data['first_name'],
             last_name=data['last_name'],
-            phone_number=data['phone'],
+            phone_number=data['phone_number'],
             email=data.get('email', '')
         )
         
@@ -244,3 +250,37 @@ class VisitViewSet(viewsets.ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         """Update visit (typically status or notes)"""
         return super().partial_update(request, *args, **kwargs)
+    
+    @action(detail=True, methods=['post'])
+    def link_customer(self, request, pk=None):
+        """Link a visit to an existing registered customer"""
+        visit = self.get_object()
+        
+        serializer = LinkCustomerSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        customer_id = serializer.validated_data['customer_id']
+        
+        # Look up the customer
+        try:
+            customer = Customer.objects.get(
+                id=customer_id,
+                tenant=request.user.tenant
+            )
+        except Customer.DoesNotExist:
+            return Response(
+                {'error': 'Customer not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        # Update visit to link to customer
+        visit.customer = customer
+        visit.customer_type = 'REGISTERED'
+        visit.customer_name = f"{customer.first_name} {customer.last_name}"
+        if customer.phone_number:
+            visit.phone_number = customer.phone_number
+        visit.save()
+        
+        # Return updated visit
+        response_serializer = VisitDetailSerializer(visit)
+        return Response(response_serializer.data)

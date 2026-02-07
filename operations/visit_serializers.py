@@ -52,9 +52,11 @@ class VisitCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Visit
         fields = [
+            'id', 'ticket_id',
             'customer', 'customer_type', 'customer_name',
             'car', 'car_info', 'car_plate', 'car_type', 'phone_number'
         ]
+        read_only_fields = ['id', 'ticket_id']
     
     def validate(self, data):
         """Validate that required fields are present based on customer type"""
@@ -135,8 +137,13 @@ class ConvertToCustomerSerializer(serializers.Serializer):
     """Serializer for converting guest to customer"""
     first_name = serializers.CharField(max_length=100)
     last_name = serializers.CharField(max_length=100)
-    phone = serializers.CharField(max_length=20)
+    phone_number = serializers.CharField(max_length=20)
     email = serializers.EmailField(required=False, allow_blank=True)
     car_make = serializers.CharField(max_length=100, required=False)
     car_model = serializers.CharField(max_length=100, required=False)
     car_color = serializers.CharField(max_length=50, required=False)
+
+
+class LinkCustomerSerializer(serializers.Serializer):
+    """Serializer for linking a visit to an existing customer"""
+    customer_id = serializers.IntegerField()
